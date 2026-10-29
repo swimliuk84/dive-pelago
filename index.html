@@ -134,6 +134,15 @@ body{background:linear-gradient(180deg,#c8eaff 0%,#eaf6ff 48%,#d9edff 100%);colo
  .dive .iconbtn{display:none}
 }
 
+
+/* Ultima revisione: elenco prima, mappa in fondo */
+.maincols{display:block}
+#mapSection{margin-top:26px;margin-bottom:24px}
+#mapSection .sectionhead{display:flex;align-items:center;justify-content:space-between}
+#mapSection .mapbox{border:2px solid #fff;border-radius:23px;box-shadow:0 5px 20px #074c7b18}
+#mapSection #map{height:280px}
+@media(max-width:600px){#mapSection #map{height:250px}}
+
 </style>
 </head>
 <body>
@@ -142,8 +151,9 @@ body{background:linear-gradient(180deg,#c8eaff 0%,#eaf6ff 48%,#d9edff 100%);colo
 <header class="top"><div class="brand"><div class="logo-mark" aria-label="Logo DIVE PELAGO"><svg viewBox="0 0 120 120" role="img" aria-label="DIVE PELAGO"><path d="M20 12H61C91 12 108 31 108 58S88 98 60 98H36L13 115 24 92V12Z" fill="none" stroke="#062b4c" stroke-width="8" stroke-linejoin="round"/><path d="M25 74Q42 78 57 67T101 66Q81 84 55 85H25Z" fill="#25b9c5"/><path d="M25 83Q45 90 65 80T101 76Q79 94 54 94H25Z" fill="#0877a5"/><path d="M44 49l8-5 8 2 5-7 7 2 2 8-7 8-12 3-10-5z" fill="#082c4e"/><circle cx="69" cy="31" r="2.5" fill="#25b9c5"/><circle cx="72" cy="38" r="2" fill="#25b9c5"/><path d="M84 62v-9l4-4 4 4v9zM82 63h12v3H82z" fill="#082c4e"/></svg></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
 <section class="hero"><div class="eyebrow">EXPLORE · LOG · SHARE</div><h2 style="font-size:clamp(32px,7vw,48px);letter-spacing:1px">DIVE<br>PELAGO</h2><p>Esplora il mare. Registra le tue immersioni. Conserva ogni ricordo.</p><div class="actions"><button class="btn primary" id="addTop">＋ Aggiungi immersione</button><button class="btn secondary" id="importBtn">⇧ Importa immersioni</button><input id="fitInput" type="file" accept=".fit,.FIT,.json,.csv,.uddf,.xml" multiple class="hide"></div></section>
 <section class="stats"><div class="stat"><span>Immersioni registrate</span><strong id="total">0</strong></div><div class="stat"><span>Profondità max</span><strong id="maxDepth">—</strong></div></section>
-<div class="maincols"><section><div class="sectionhead"><h3>📍 Mappa delle immersioni</h3></div><div class="mapbox"><div class="maptop"><span>I tuoi siti d'immersione</span><span>● <span id="siteCount">0</span> siti</span></div><div id="map"></div><div class="mapnote">I punti rossi indicano i siti con coordinate salvate.</div></div></section>
+<div class="maincols">
 <section><div class="sectionhead"><h3>🤿 Le tue immersioni</h3></div><div class="filters"><input class="field" type="search" id="search" placeholder="Cerca sito…" aria-label="Cerca sito"><input class="field" type="date" id="dateFilter" aria-label="Filtra per data"></div><div class="dives" id="dives" style="margin-top:12px"></div></section></div>
+<section id="mapSection" class="bottom-map"><div class="sectionhead"><h3>📍 Mappa delle immersioni</h3><span class="notice">I tuoi siti d'immersione</span></div><div class="mapbox"><div class="maptop"><span>I tuoi siti d'immersione</span><span>● <span id="siteCount">0</span> siti</span></div><div id="map"></div><div class="mapnote">I punti rossi indicano i siti con coordinate salvate.</div></div></section>
 <section id="mediaSection"><div class="sectionhead"><h3>📸 Foto e video</h3><span class="notice">Ricordi delle tue immersioni</span></div><div class="empty">Le foto e i video non vengono mostrati tutti insieme.<br><br>Apri la scheda di una singola immersione per vedere le foto e i video associati.</div></section>
  <div class="footer">I dati inseriti in questa versione di prova vengono salvati nel browser del dispositivo. Non sono un backup: usa “Esporta backup” per conservarne una copia. Non caricare dati personali nel repository GitHub pubblico. L’importazione FIT legge i dati disponibili nel file. Verifica sempre i valori importati, perché i campi presenti dipendono dal dispositivo e dal file esportato.</div>
 </div>
