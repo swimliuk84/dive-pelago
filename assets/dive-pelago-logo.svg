@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 1000" role="img" aria-labelledby="title desc">
+<title id="title">DIVE PELAGO</title><desc id="desc">Logo DIVE PELAGO: lettera D con subacqueo, onde e faro, motto CONNECT • DIVE • EXPLORE.</desc>
+<rect width="1100" height="1000" fill="#fff"/>
+<g transform="translate(250 55)">
+<path d="M110 15H390C550 15 650 130 650 300C650 485 510 600 345 600H230L60 730 110 600Z" fill="#062a49"/>
+<path d="M135 40H390C530 40 625 145 625 300C625 465 500 575 345 575H160V40Z" fill="#fff"/>
+<path d="M160 445Q240 425 305 455T440 442T600 430V530Q485 570 365 550T160 550Z" fill="#72d5d0"/>
+<path d="M160 490Q260 465 330 500T480 485T600 475V550Q470 580 355 560T160 560Z" fill="#27b6c0"/>
+<path d="M160 525Q270 500 360 535T510 520T600 515V565H160Z" fill="#087b9c"/>
+<path d="M160 445L210 452 240 485 275 510 160 510Z" fill="#062a49"/>
+<g fill="#062a49">
+<path d="M380 270l20-16 19 3 15-13 17 7 6 18-13 22-27 14-28-5-20-13z"/>
+<path d="M378 284l-31 23-33 3-25 21 38 2 44-11 30-18z"/>
+<path d="M408 286l23 20 17 26 17-3-10-35-22-27z"/>
+<path d="M385 257q-7-17 10-27l14-8 4 10-13 12 7 11z"/>
+<circle cx="419" cy="250" r="14"/>
+<path d="M432 254l20 13-12 8-15-10z"/>
+<path d="M425 270l30 9-12 10-25-6z"/>
+<path d="M362 296l-29 23-27 8 14 11 39-12 23-20z"/>
+<path d="M390 296l-6 30-28 22 20 5 32-18 7-34z"/>
+<path d="M500 437v-56l15-17 15 17v56z"/><path d="M493 440h44v9h-44z"/><path d="M507 366v-9h16v9z"/>
+</g>
+<g fill="#1aa7b4"><circle cx="414" cy="195" r="5"/><circle cx="422" cy="216" r="4"/><circle cx="431" cy="234" r="3"/><path d="M255 220q8-8 16 0t16 0q-8 12-16 2t-16-2z"/><path d="M315 190q8-8 16 0t16 0q-8 12-16 2t-16-2z"/><path d="M530 230q8-8 16 0t16 0q-8 12-16 2t-16-2z"/></g>
+</g>
+<text x="550" y="850" font-family="Arial,Helvetica,sans-serif" font-size="92" letter-spacing="15" text-anchor="middle" fill="#062a49">DIVE<tspan fill="#159da9">PELAGO</tspan></text>
+<text x="550" y="925" font-family="Arial,Helvetica,sans-serif" font-size="31" letter-spacing="8" text-anchor="middle" fill="#062a49">CONNECT <tspan fill="#159da9">• DIVE •</tspan> EXPLORE</text>
+</svg>
