@@ -33,7 +33,7 @@
 <label class="formfield full">Foto (restano su questo dispositivo)<input id="photos" type="file" accept="image/*,video/*" multiple></label>
 </div><p class="notice">Inserisci le coordinate se vuoi vedere il sito sulla mappa. Foto e video sono conservati nel browser quando possibile; per ora non vengono sincronizzati automaticamente con iCloud.</p><div class="formbuttons"><button type="button" class="btn secondary" id="cancel">Annulla</button><button type="submit" class="btn primary">Salva immersione</button></div></form></div></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fit-file-parser@2.3.3/dist/fit-file-parser.js"></script>
+<script src="https://unpkg.com/fit-file-parser@2.3.3/dist/fit-file-parser.js" onerror="this.onerror=null;this.src=&quot;https://cdn.jsdelivr.net/npm/fit-file-parser@2.3.3/dist/fit-file-parser.js&quot;"></script>
 <script>
 const KEY='divepelago-v1';let dives=[];try{dives=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){dives=[]}
 const $=id=>document.getElementById(id);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
