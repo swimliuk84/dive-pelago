@@ -111,10 +111,12 @@ function parseFitBinary(buffer,fileName){
  return sources.map((s,i)=>{
   const ts=s[2]??activity?.[253],date=fitTimestamp(ts);
   const rel=records.filter(r=>ts==null||r[253]==null||Math.abs(r[253]-ts)<36*3600);
-  // Nel messaggio FIT "session", avg_speed è il campo 10: non è la profondità.
-  // max_depth è il campo 63 e total_elapsed_time è il campo 5 (millisecondi).
-  const maxDepth=s[63]!=null?Number(s[63])/100:'';
-  const duration=s[5]!=null?Math.round(Number(s[5])/60000):(rel.length>1?Math.round((Math.max(...rel.map(r=>r[253]||0))-Math.min(...rel.map(r=>r[253]||0)))/60):'');
+  // La profondità massima non è presente nel messaggio session di questo FIT Garmin:
+  // il profilo immersione registra la profondità nel campo 92 dei record, in millesimi di metro.
+  const recordDepths=rel.map(r=>Number(r[92])).filter(n=>Number.isFinite(n)&&n>=0&&n<100000&&n!==65535&&n!==4294967295);
+  const sessionDepth=s[63]!=null&&s[63]!==4294967295&&s[63]!==65535?Number(s[63])/100:'';
+  const maxDepth=sessionDepth!==''?sessionDepth:(recordDepths.length?Math.max(...recordDepths)/1000:'');
+  const duration=s[7]!=null&&s[7]!==4294967295?Math.round(Number(s[7])/60000):(rel.length>1?Math.round((Math.max(...rel.map(r=>r[253]||0))-Math.min(...rel.map(r=>r[253]||0)))/60):'');
   const lat=s[3]??rel.find(r=>r[0]!=null)?.[0],lon=s[4]??rel.find(r=>r[1]!=null)?.[1];
   const latitude=lat==null?'':(Math.abs(lat)>90?lat*180/2147483648:lat),longitude=lon==null?'':(Math.abs(lon)>180?lon*180/2147483648:lon);
   const temps=rel.map(r=>r[13]).filter(n=>Number.isFinite(n)&&n<100);
