@@ -91,7 +91,7 @@ function parseFitBinary(buffer,fileName){
   const h=v.getUint8(pos++),compressed=!!(h&0x80),local=h&0x0f,offset=(h>>5)&3;
   if(!compressed&&(h&0x40)){
    if(pos+5>limit)break;
-   const arch=v.getUint8(pos++),little=arch===0,global=little?v.getUint16(pos,true):v.getUint16(pos,false);pos++;
+   pos++;const arch=v.getUint8(pos++),little=arch===0,global=little?v.getUint16(pos,true):v.getUint16(pos,false);pos+=2;
    const n=v.getUint8(pos++),fields=[];
    for(let i=0;i<n&&pos+3<=limit;i++)fields.push({num:v.getUint8(pos++),size:v.getUint8(pos++),base:v.getUint8(pos++)});
    const dev=[];if(h&0x20){const nd=v.getUint8(pos++);for(let i=0;i<nd&&pos+3<=limit;i++)dev.push({num:v.getUint8(pos++),size:v.getUint8(pos++),base:v.getUint8(pos++)})}
