@@ -101,7 +101,7 @@ function parseFitBinary(buffer,fileName){
   const obj={};
   for(const f of def.fields){if(pos+f.size>limit){pos=limit;break}const val=fitReadNumber(v,pos,f.size,f.base,def.little);pos+=f.size;if(val!==null)obj[f.num]=val}
   for(const f of (def.dev||[]))pos+=f.size;
-  if(compressed){const base=lastTimestamp&~31;lastTimestamp=base+offset;if(lastTimestamp<base)lastTimestamp+=32;obj[253]=lastTimestamp}
+  if(compressed){const base=lastTimestamp&~31;let stamp=base|((lastTimestamp+offset)&31);if(stamp<lastTimestamp)stamp+=32;lastTimestamp=stamp;obj[253]=lastTimestamp}
   if(obj[253]!=null)lastTimestamp=obj[253];
   if(def.global===20)records.push(obj);
   else if(def.global===18)sessions.push(obj);
