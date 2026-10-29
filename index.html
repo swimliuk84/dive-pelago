@@ -152,12 +152,14 @@ body{background:linear-gradient(180deg,#c8eaff 0%,#eaf6ff 48%,#d9edff 100%);colo
 
 
 .logo-mark{background:#fff;overflow:hidden;padding:0;border-radius:10px}.logo-mark img{display:block;width:100%;height:100%;object-fit:contain}
+
+.logo-mark{background:transparent!important;padding:0!important;box-shadow:none!important;border-radius:0!important;width:clamp(170px,40vw,330px)!important;height:auto!important;flex:0 1 330px!important;display:block!important}.logo-mark img{display:block;width:100%;height:auto;max-height:150px;object-fit:contain}.brandwords{display:none!important}@media(max-width:600px){.top{min-height:180px!important;padding-top:24px!important}.logo-mark{width:min(68vw,270px)!important;flex-basis:min(68vw,270px)!important}.logo-mark img{max-height:125px}}
 </style>
 </head>
 <body>
 <button id="addFloat" aria-label="Aggiungi immersione">+</button>
 <div class="wrap">
-<header class="top"><div class="brand"><div class="logo-mark"><img src="./assets/logo-dive-pelago.svg" alt="Logo DIVE PELAGO"></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
+<header class="top"><div class="brand"><div class="logo-mark"><img src="./assets/dive-pelago-logo.svg" alt="Logo DIVE PELAGO"></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
 <section class="hero"><div class="eyebrow">EXPLORE · LOG · SHARE</div><h2 style="font-size:clamp(32px,7vw,48px);letter-spacing:1px">DIVE<br>PELAGO</h2><p>Esplora il mare. Registra le tue immersioni. Conserva ogni ricordo.</p><div class="actions"><button class="btn primary" id="addTop">＋ Aggiungi immersione</button><button class="btn secondary" id="importBtn">⇧ Importa immersioni</button><input id="fitInput" type="file" accept=".fit,.FIT,.json,.csv,.uddf,.xml" multiple class="hide"></div></section>
 <section class="stats"><div class="stat"><span>Immersioni registrate</span><strong id="total">0</strong></div><div class="stat"><span>Profondità max</span><strong id="maxDepth">—</strong></div></section>
 <div class="maincols">
