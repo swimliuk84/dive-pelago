@@ -172,12 +172,63 @@ body{background:linear-gradient(180deg,#c8eaff 0%,#eaf6ff 48%,#d9edff 100%);colo
 #mapSection #map{height:210px!important}
 @media(max-width:600px){#mapSection #map{height:185px!important}}
 
+
+/* Home immersiva DIVE PELAGO */
+body[data-screen="home"]{background:#003b59;color:#fff;overflow-x:hidden}
+body[data-screen="home"] .wrap{padding:0 0 96px;max-width:none}
+body[data-screen="home"] .top{display:none}
+#homeScreen{display:none;position:relative;min-height:calc(100svh - 76px);padding:26px 18px 26px;isolation:isolate;overflow:hidden;background:linear-gradient(180deg,rgba(0,35,65,.08),rgba(0,30,55,.18) 35%,rgba(0,24,48,.88) 100%),url("https://images.unsplash.com/photo-1709483095301-2d1f3e95b1d4?auto=format&fit=crop&w=1600&q=88") center center/cover no-repeat}
+#homeScreen:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% 5%,rgba(80,224,255,.18),transparent 48%)}
+body[data-screen="home"] #homeScreen{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:20px}
+.home-brand{width:min(76vw,320px);max-height:145px;object-fit:contain;filter:drop-shadow(0 5px 16px #001c35aa);margin:4px auto 0}
+.home-title{font-size:clamp(24px,6vw,35px);line-height:1.1;text-align:center;text-shadow:0 3px 18px #002d49;margin:auto 0 0;font-weight:850;letter-spacing:1px}
+.home-title span{display:block;font-size:11px;letter-spacing:4px;font-weight:700;color:#c8f6ff;margin-top:12px}
+.home-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;width:min(100%,520px);margin:0 auto}
+.home-action{min-height:96px;border:1px solid #ffffff80;border-radius:19px;background:#012d4b70;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;padding:14px;box-shadow:0 8px 24px #00162c40}
+.home-action:active{transform:scale(.98);background:#0077b9a6}
+.home-action b{font-size:27px;line-height:1.1;margin-bottom:8px}
+.home-action strong{font-size:14px}
+.home-action small{font-size:11px;color:#d5f4ff;margin-top:4px}
+body[data-screen="home"] #addFloat{display:none}
+body[data-screen="home"] .tabs{background:#00233bef;border-top:1px solid #ffffff30;backdrop-filter:blur(18px)}
+body[data-screen="home"] .tab{color:#b5d2e2}
+body[data-screen="home"] .tab.active{color:#fff}
+body[data-screen="home"] .tab.active:after{background:#62e5ff}
+body[data-screen="dives"] #homeScreen,body[data-screen="media"] #homeScreen,body[data-screen="stats"] #homeScreen{display:none}
+body[data-screen="dives"] .top,body[data-screen="media"] .top,body[data-screen="stats"] .top{display:flex}
+body[data-screen="media"] #mapSection,body[data-screen="media"] .maincols,body[data-screen="media"] .footer,body[data-screen="stats"] #mapSection,body[data-screen="stats"] .maincols,body[data-screen="stats"] .footer{display:none}
+#mediaScreen,#statsScreen{display:none;padding:8px 0 18px}
+body[data-screen="media"] #mediaScreen,body[data-screen="stats"] #statsScreen{display:block}
+#mediaScreen h2,#statsScreen h2{font-size:24px;margin:14px 0 6px;color:#102650}
+.screen-subtitle{font-size:13px;color:#58718c;margin:0 0 18px}
+#mediaGallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#mediaGallery .dive{display:block;min-width:0;padding:8px;overflow:hidden}
+#mediaGallery .dive img,#mediaGallery .dive video{width:100%;height:150px;object-fit:cover;border-radius:13px;margin-top:8px;background:#dceefa}
+#mediaGallery .dive strong{font-size:14px}
+#mediaGallery .dive .notice{font-size:11px}
+.stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stats-card{border-radius:20px;background:linear-gradient(145deg,#fff,#eaf7ff);border:1px solid #d4e8f8;padding:18px;box-shadow:0 6px 18px #075a9110}
+.stats-card span{display:block;font-size:12px;color:#58718c}
+.stats-card strong{display:block;font-size:28px;color:#075eb0;margin-top:8px}
+.stats-note{margin-top:14px;background:#fff;border:1px solid #d4e8f8;border-radius:16px;padding:14px;font-size:13px;line-height:1.6;color:#42617f}
+@media(max-width:420px){#homeScreen{padding:24px 15px 22px;min-height:calc(100svh - 70px)}.home-brand{width:min(76vw,280px);max-height:125px}.home-title{font-size:27px}.home-actions{gap:9px}.home-action{min-height:92px;padding:12px;border-radius:17px}.home-action b{font-size:25px}#mediaGallery{gap:8px}#mediaGallery .dive img,#mediaGallery .dive video{height:125px}}
+@media(min-width:720px){#homeScreen{min-height:calc(100vh - 76px);padding:30px}.home-actions{gap:16px}.home-action{min-height:112px;padding:20px}.home-action strong{font-size:16px}}
+
 </style>
 </head>
 <body>
 <button id="addFloat" aria-label="Importa file immersioni" title="Importa file FIT/CSV/JSON" onclick="document.getElementById('fitInput').click()">⇧</button>
 <div class="wrap">
 <header class="top"><div class="brand"><div class="logo-mark"><img src="./assets/dive-pelago-logo.svg" alt="Logo DIVE PELAGO"></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
+<section id="homeScreen" aria-label="Home DIVE PELAGO">
+<img class="home-brand" src="./assets/dive-pelago-logo.svg" alt="DIVE PELAGO">
+<h2 class="home-title">IL MARE, IMMERSIONE DOPO IMMERSIONE<span>CONNECT · DIVE · EXPLORE</span></h2>
+<div class="home-actions">
+<button class="home-action" data-go="dives"><b>🤿</b><strong>Le mie immersioni</strong><small>Esplora il tuo diario</small></button>
+<button class="home-action" id="homeImport"><b>⇧</b><strong>Importa immersioni</strong><small>FIT · CSV · JSON · UDDF</small></button>
+<button class="home-action" data-go="media"><b>▧</b><strong>Foto e video</strong><small>I ricordi sott’acqua</small></button>
+<button class="home-action" data-go="stats"><b>◴</b><strong>Statistiche</strong><small>Il riepilogo delle tue uscite</small></button>
+</div></section>
 <section class="hero"><div class="eyebrow">EXPLORE · LOG · SHARE</div><h2 style="font-size:clamp(32px,7vw,48px);letter-spacing:1px">DIVE<br>PELAGO</h2><p>Esplora il mare. Registra le tue immersioni. Conserva ogni ricordo.</p><div class="actions"><button class="btn primary" id="addTop">＋ Aggiungi immersione</button><button class="btn secondary" id="importBtn">⇧ Importa immersioni</button><input id="fitInput" type="file" accept=".fit,.FIT,.json,.csv,.uddf,.xml" multiple class="hide"></div></section>
 <section class="stats"><div class="stat"><span>Immersioni registrate</span><strong id="total">0</strong></div><div class="stat"><span>Profondità max</span><strong id="maxDepth">—</strong></div></section>
 <section id="mapSection" class="bottom-map"><div class="sectionhead"><h3>📍 Mappa delle immersioni</h3><span class="notice">I tuoi siti d'immersione</span></div><div class="mapbox"><div class="maptop"><span>I tuoi siti d'immersione</span><span>● <span id="siteCount">0</span> siti</span></div><div id="map"></div><div class="mapnote">I punti rossi indicano i siti con coordinate salvate.</div></div></section>
@@ -185,9 +236,13 @@ body{background:linear-gradient(180deg,#c8eaff 0%,#eaf6ff 48%,#d9edff 100%);colo
 <section><div class="sectionhead"><h3>🤿 Le tue immersioni</h3></div><div class="filter-panel" aria-label="Filtri immersioni"><div class="filter-title">🔎 Filtra le immersioni</div><div class="filters"><label class="filter-control"><span>📍 Sito di immersione</span><select class="field" id="siteFilter" aria-label="Filtra per sito"><option value="">Tutti i siti</option></select></label><label class="filter-control"><span>Dal giorno</span><input class="field" type="date" id="dateFrom" aria-label="Data iniziale"></label><label class="filter-control"><span>Al giorno</span><input class="field" type="date" id="dateTo" aria-label="Data finale"></label><label class="filter-control search-control"><span>Oppure cerca un sito</span><input class="field" type="search" id="search" placeholder="Nome del sito…" aria-label="Cerca sito"></label><button type="button" class="clear-filters" id="clearFilters">Azzera filtri</button></div><div class="filter-result" id="filterResult" aria-live="polite"></div></div><div class="dives" id="dives" style="margin-top:12px"></div></section></div>
 
 
- <div class="footer">I dati inseriti in questa versione di prova vengono salvati nel browser del dispositivo. Non sono un backup: usa “Esporta backup” per conservarne una copia. Non caricare dati personali nel repository GitHub pubblico. L’importazione FIT legge i dati disponibili nel file. Verifica sempre i valori importati, perché i campi presenti dipendono dal dispositivo e dal file esportato.</div>
+ <section id="mediaScreen"><h2>Foto e video</h2><p class="screen-subtitle">I ricordi associati alle tue immersioni.</p><div id="mediaGallery"></div></section>
+<section id="statsScreen"><h2>Le tue statistiche</h2><p class="screen-subtitle">Una panoramica del tuo diario subacqueo.</p><div class="stats-grid">
+<div class="stats-card"><span>Immersioni registrate</span><strong id="statsTotal">0</strong></div><div class="stats-card"><span>Profondità massima</span><strong id="statsMaxDepth">—</strong></div><div class="stats-card"><span>Tempo sott’acqua</span><strong id="statsDuration">0 min</strong></div><div class="stats-card"><span>Siti visitati</span><strong id="statsSites">0</strong></div></div>
+<div class="stats-note">I dati sono salvati nel browser di questo dispositivo. Per conservarli, esporta regolarmente un backup.</div><button class="btn primary" id="exportBackup" style="margin-top:14px;width:100%">⇩ Esporta backup</button></section>
+<div class="footer">I dati inseriti in questa versione di prova vengono salvati nel browser del dispositivo. Non sono un backup: usa “Esporta backup” per conservarne una copia. Non caricare dati personali nel repository GitHub pubblico. L’importazione FIT legge i dati disponibili nel file. Verifica sempre i valori importati, perché i campi presenti dipendono dal dispositivo e dal file esportato.</div>
 </div>
-<nav class="tabs"><button class="tab active" data-tab="dives"><b>📍</b>Immersioni</button><button class="tab" data-tab="backup"><b>▥</b>Statistiche</button><button class="tab" data-tab="profile"><b>♟</b>Profilo</button></nav>
+<nav class="tabs"><button class="tab active" data-tab="home"><b>⌂</b>Home</button><button class="tab" data-tab="dives"><b>🤿</b>Immersioni</button><button class="tab" data-tab="media"><b>▧</b>Media</button><button class="tab" data-tab="stats"><b>◴</b>Statistiche</button></nav>
 <div class="modal detailmodal" id="detailModal"><div class="detailsheet"><button class="detailclose" id="detailClose">Chiudi ✕</button><h3 id="detailTitle">Immersione</h3><div class="detailmeta" id="detailMeta"></div><div id="detailStats"></div><div id="detailCharts"></div><div class="detailnotes" id="detailNotes"></div><div class="detailgallery" id="detailGallery"></div><div class="detailactions"><button class="btn secondary" id="detailBack">Chiudi</button><button class="btn primary" id="detailEdit">Modifica immersione</button></div></div></div>
 <div class="modal" id="modal"><div class="sheet"><h3 id="modalTitle">Nuova immersione</h3><form id="diveForm"><input type="hidden" id="diveId"><div class="formgrid">
 <label class="formfield full">Nome del sito<input id="site" required placeholder="Es. Secca di Calafuria"></label>
@@ -405,7 +460,25 @@ $('fitInput').onchange=async e=>{
  if(failed.length)message+='\n\nFile non importati:\n'+failed.join('\n');
  alert(message);e.target.value='';
 };
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.tab==='dives')$('dives').scrollIntoView({behavior:'smooth',block:'start'});else if(b.dataset.tab==='map')$('map').scrollIntoView({behavior:'smooth',block:'center'});else if(b.dataset.tab==='profile'){alert('La sezione Profilo sarà disponibile in una prossima versione.')}else if(b.dataset.tab==='backup'){const blob=new Blob([JSON.stringify(dives,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dive-pelago-backup-'+dateToday()+'.json';a.click();URL.revokeObjectURL(a.href)}else window.scrollTo({top:0,behavior:'smooth'})});
-initMap();refreshSiteFilter();render();
+function setScreen(screen){
+ document.body.dataset.screen=screen;
+ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===screen));
+ window.scrollTo({top:0,behavior:'instant'});
+ if(screen==='media')renderMedia();
+ if(screen==='dives')setTimeout(()=>{if(map)map.invalidateSize()},220);
+ if(screen==='stats')updateStatsScreen();
+}
+function updateStatsScreen(){
+ const max=dives.length?Math.max(0,...dives.map(d=>Number(d.depth)||0)):0;
+ $('statsTotal').textContent=dives.length;
+ $('statsMaxDepth').textContent=max>0?max+' m':'—';
+ $('statsDuration').textContent=dives.reduce((sum,d)=>sum+(Number(d.duration)||0),0)+' min';
+ $('statsSites').textContent=new Set(dives.map(d=>String(d.site||'').trim()).filter(Boolean)).size;
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>setScreen(b.dataset.tab));
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>setScreen(b.dataset.go));
+$('homeImport').onclick=()=>$('fitInput').click();
+$('exportBackup').onclick=()=>{const blob=new Blob([JSON.stringify(dives,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dive-pelago-backup-'+dateToday()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+initMap();refreshSiteFilter();render();setScreen("home");
 </script>
 </body></html>
