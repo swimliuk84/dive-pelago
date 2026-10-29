@@ -33,7 +33,7 @@
 <label class="formfield full">Foto (restano su questo dispositivo)<input id="photos" type="file" accept="image/*,video/*" multiple></label>
 </div><p class="notice">Inserisci le coordinate se vuoi vedere il sito sulla mappa. Foto e video sono conservati nel browser quando possibile; per ora non vengono sincronizzati automaticamente con iCloud.</p><div class="formbuttons"><button type="button" class="btn secondary" id="cancel">Annulla</button><button type="submit" class="btn primary">Salva immersione</button></div></form></div></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/fit-file-parser@2.3.3/dist/fit-file-parser.js" onerror="this.onerror=null;this.src=&quot;https://cdn.jsdelivr.net/npm/fit-file-parser@2.3.3/dist/fit-file-parser.js&quot;"></script>
+
 <script>
 const KEY='divepelago-v1';let dives=[];try{dives=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){dives=[]}
 const $=id=>document.getElementById(id);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -64,71 +64,63 @@ function firstNumber(objects,keys){
  for(const obj of objects){if(!obj)continue;for(const k of keys){const v=obj[k];if(v!==undefined&&v!==null&&v!==''&&Number.isFinite(Number(v)))return Number(v)}}
  return '';
 }
-function parseFitFile(file){
- return new Promise((resolve,reject)=>{
-  const Parser=window.FitParser||window.fitFileParser||window.FitFileParser;
-  const FitCtor=Parser&&(Parser.default||Parser);
-  if(typeof FitCtor!=='function'){reject(new Error('Il lettore FIT non si è caricato. Controlla la connessione e riprova.'));return}
-  const reader=new FileReader();
-  reader.onerror=()=>reject(new Error('Non riesco a leggere il file selezionato.'));
-  reader.onload=()=>{
-   try{
-    const parser=new FitCtor({force:true,mode:'list',lengthUnit:'m',temperatureUnit:'celsius',elapsedRecordField:true});
-    parser.parse(reader.result,(err,data)=>{
-     if(err){reject(new Error(typeof err==='string'?err:'File FIT non valido.'));return}
-     try{
-      const sessions=Array.isArray(data.sessions)?data.sessions:[];
-      const summaries=Array.isArray(data.dive_summary)?data.dive_summary:[];
-      const records=Array.isArray(data.records)?data.records:[];
-      const messages=Array.isArray(data.messages)?data.messages:[];
-      const divesOut=[];
-      const sessionList=sessions.length?sessions:(summaries.length?summaries:[{}]);
-      sessionList.forEach((session,idx)=>{
-       const summary=summaries[idx]||summaries[0]||{};
-       const start=asDate(session.start_time)||asDate(summary.start_time)||asDate(data.activity?.timestamp)||null;
-       const relevant=records.filter(r=>{
-        const rd=asDate(r.timestamp);return !start||!rd||Math.abs(rd-start)<36*60*60*1000;
-       });
-       const depthCandidates=[session,summary,...relevant];
-       let maxDepth=firstNumber(depthCandidates,['max_depth','enhanced_max_depth','depth','enhanced_depth']);
-       if(maxDepth!==''&&maxDepth>1000)maxDepth=maxDepth/100;
-       let duration=firstNumber([session,summary],['total_elapsed_time','total_timer_time','bottom_time','duration']);
-       if(duration!==''&&duration>0){
-        // FIT elapsed times are generally seconds; bottom_time may already be seconds or minutes.
-        if(session.total_elapsed_time!=null||session.total_timer_time!=null||summary.total_elapsed_time!=null) duration=Math.round(duration/60);
-        else if(duration>180) duration=Math.round(duration/60);
-        else duration=Math.round(duration);
-       } else if(relevant.length>1){
-        const times=relevant.map(r=>asDate(r.timestamp)).filter(Boolean).sort((a,b)=>a-b);
-        if(times.length>1)duration=Math.round((times[times.length-1]-times[0])/60000);
-       }
-       const temps=relevant.map(r=>Number(r.temperature)).filter(n=>Number.isFinite(n)&&n>-50&&n<100);
-       const lat=firstNumber([session,summary,...relevant],['position_lat','latitude','start_position_lat']);
-       const lon=firstNumber([session,summary,...relevant],['position_long','longitude','start_position_long']);
-       // Some FIT readers expose semicircles rather than degrees; convert only obviously out-of-range values.
-       const latitude=lat!==''&&Math.abs(lat)>90?lat*(180/2147483648):lat;
-       const longitude=lon!==''&&Math.abs(lon)>180?lon*(180/2147483648):lon;
-       const site=session.name||summary.name||session.location||summary.location||'Immersione da file FIT';
-       divesOut.push({
-        id:crypto.randomUUID?crypto.randomUUID():('fit-'+Date.now()+'-'+idx),
-        site:String(site),
-        date:dateOnly(start||summary.timestamp||session.timestamp),
-        depth:maxDepth===''?'':Math.round(maxDepth*10)/10,
-        duration:duration===''?'':duration,
-        temperature:temps.length?Math.round((temps.reduce((a,b)=>a+b,0)/temps.length)*10)/10:firstNumber([session,summary],['avg_temperature','temperature']),
-        lat:latitude===''?'':Math.round(latitude*1e6)/1e6,
-        lon:longitude===''?'':Math.round(longitude*1e6)/1e6,
-        notes:'Importato da '+file.name+(session.sport?' · '+session.sport:''),
-        photos:[]
-       });
-      });
-      resolve(divesOut);
-     }catch(parseError){reject(parseError)}
-    });
-   }catch(err){reject(err)}
-  };
-  reader.readAsArrayBuffer(file);
+function fitReadNumber(view,offset,size,base,little){
+ if(offset<0||offset+size>view.byteLength)return null;
+ try{
+  switch(base&0x1f){
+   case 0x00:case 0x02:case 0x0A:return view.getUint8(offset);
+   case 0x01:return view.getInt8(offset);
+   case 0x83:return view.getInt16(offset,little);
+   case 0x84:return view.getUint16(offset,little);
+   case 0x85:return view.getInt32(offset,little);
+   case 0x86:case 0x8B:case 0x8C:return view.getUint32(offset,little);
+   case 0x88:return view.getFloat32(offset,little);
+   case 0x89:return view.getFloat64(offset,little);
+   case 0x07:{let s='';for(let i=0;i<size;i++){const b=view.getUint8(offset+i);if(!b)break;s+=String.fromCharCode(b)}return s}
+  }
+ }catch(e){}
+ return null;
+}
+function fitTimestamp(seconds){return Number.isFinite(seconds)?new Date(Date.UTC(1989,11,31)+seconds*1000):null}
+function parseFitBinary(buffer,fileName){
+ const v=new DataView(buffer);
+ if(v.byteLength<12||String.fromCharCode(v.getUint8(8),v.getUint8(9),v.getUint8(10),v.getUint8(11))!=='.FIT')throw new Error('Il file selezionato non sembra un FIT Garmin valido.');
+ const header=v.getUint8(0),dataSize=v.getUint32(4,true),limit=Math.min(v.byteLength,header+dataSize);
+ let pos=header,defs={},records=[],sessions=[],activity=null,lastTimestamp=0;
+ while(pos<limit){
+  const h=v.getUint8(pos++),compressed=!!(h&0x80),local=h&0x0f,offset=(h>>5)&3;
+  if(!compressed&&(h&0x40)){
+   if(pos+5>limit)break;
+   const arch=v.getUint8(pos++),little=arch===0,global=little?v.getUint16(pos,true):v.getUint16(pos,false);pos++;
+   const n=v.getUint8(pos++),fields=[];
+   for(let i=0;i<n&&pos+3<=limit;i++)fields.push({num:v.getUint8(pos++),size:v.getUint8(pos++),base:v.getUint8(pos++)});
+   const dev=[];if(h&0x20){const nd=v.getUint8(pos++);for(let i=0;i<nd&&pos+3<=limit;i++)dev.push({num:v.getUint8(pos++),size:v.getUint8(pos++),base:v.getUint8(pos++)})}
+   defs[local]={global,little,fields,dev};continue;
+  }
+  const def=defs[local];if(!def)throw new Error('Il file FIT contiene una struttura non riconosciuta.');
+  const obj={};
+  for(const f of def.fields){if(pos+f.size>limit){pos=limit;break}const val=fitReadNumber(v,pos,f.size,f.base,def.little);pos+=f.size;if(val!==null)obj[f.num]=val}
+  for(const f of (def.dev||[]))pos+=f.size;
+  if(compressed){const base=lastTimestamp&~31;lastTimestamp=base+offset;if(lastTimestamp<base)lastTimestamp+=32;obj[253]=lastTimestamp}
+  if(obj[253]!=null)lastTimestamp=obj[253];
+  if(def.global===20)records.push(obj);
+  else if(def.global===18)sessions.push(obj);
+  else if(def.global===34)activity=obj;
+ }
+ const sources=sessions.length?sessions:[{}];
+ return sources.map((s,i)=>{
+  const ts=s[2]??activity?.[253],date=fitTimestamp(ts);
+  const rel=records.filter(r=>ts==null||r[253]==null||Math.abs(r[253]-ts)<36*3600);
+  const maxDepth=s[10]!=null?Number(s[10])/100:'';
+  const duration=s[7]!=null?Math.round(Number(s[7])/60000):(rel.length>1?Math.round((Math.max(...rel.map(r=>r[253]||0))-Math.min(...rel.map(r=>r[253]||0)))/60):'');
+  const lat=s[3]??rel.find(r=>r[0]!=null)?.[0],lon=s[4]??rel.find(r=>r[1]!=null)?.[1];
+  const latitude=lat==null?'':(Math.abs(lat)>90?lat*180/2147483648:lat),longitude=lon==null?'':(Math.abs(lon)>180?lon*180/2147483648:lon);
+  const temps=rel.map(r=>r[13]).filter(n=>Number.isFinite(n)&&n<100);
+  return {id:crypto.randomUUID?crypto.randomUUID():'fit-'+Date.now()+'-'+i,site:'Immersione Garmin · '+fileName,date:dateOnly(date),depth:maxDepth===''?'':Math.round(maxDepth*10)/10,duration,temperature:temps.length?Math.round(temps.reduce((a,b)=>a+b,0)/temps.length*10)/10:'',lat:latitude===''?'':Math.round(latitude*1e6)/1e6,lon:longitude===''?'':Math.round(longitude*1e6)/1e6,notes:'Importato dal file FIT '+fileName,photos:[]};
  });
+}
+function parseFitFile(file){
+ return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=()=>reject(new Error('Non riesco a leggere il file selezionato.'));reader.onload=()=>{try{resolve(parseFitBinary(reader.result,file.name))}catch(err){reject(err)}};reader.readAsArrayBuffer(file)});
 }
 $('fitInput').onchange=async e=>{
  const files=[...e.target.files];if(!files.length)return;
