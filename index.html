@@ -12,6 +12,74 @@
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#e9f7ff 0%,#f5faff 42%,#e8f4ff 100%);color:#102d53;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;position:relative}body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.16;background-image:radial-gradient(circle at 8% 18%,#b5f8f0 0 2px,transparent 3px),radial-gradient(circle at 78% 22%,#b5f8f0 0 3px,transparent 4px),radial-gradient(circle at 89% 66%,#b5f8f0 0 2px,transparent 3px),radial-gradient(circle at 25% 72%,#b5f8f0 0 3px,transparent 4px),radial-gradient(ellipse at 50% 110%,#16716c 0,transparent 45%);background-size:100% 100%}.wrap{position:relative}button,input,select,textarea{font:inherit}button{cursor:pointer}.wrap{max-width:1100px;margin:auto;padding:20px 18px 90px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 22px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#26d6f2,#0877c9);display:grid;place-items:center;font-size:25px;box-shadow:0 8px 24px #0877c944}.brand h1{font-size:21px;letter-spacing:2px;margin:0}.brand p{font-size:12px;color:#55738d;margin:3px 0 0}.pill{border:1px solid #b5def5;border-radius:30px;padding:8px 12px;color:#0877c9;background:#fff;font-size:12px;white-space:nowrap}.hero{padding:28px 24px;border-radius:25px;background:linear-gradient(180deg,#003b60a8 0%,#00365de0 68%,#001e39ed 100%),url("https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1600&q=85") center 44%/cover;border:1px solid #60d9ff;position:relative;overflow:hidden;box-shadow:0 18px 50px #00345a44;color:#fff;min-height:390px;display:flex;flex-direction:column;justify-content:flex-end}.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,#6beaff35,transparent 55%);pointer-events:none}.hero:after{content:"";position:absolute;inset:auto 0 0;height:28%;background:linear-gradient(0deg,#001e39aa,transparent);pointer-events:none}.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#a5f2ff;font-weight:800;position:relative;z-index:1}.hero h2{font-size:clamp(25px,5vw,38px);line-height:1.1;margin:10px 0;color:#fff;text-shadow:0 2px 12px #001e39}.hero p{color:#f0fbff;max-width:570px;margin:0 0 18px;text-shadow:0 2px 10px #001e39}.actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:2}.hero h2,.hero p,.hero .eyebrow{position:relative;z-index:1}.btn{border:0;border-radius:13px;padding:12px 16px;font-weight:700}.primary{background:#0877e8;color:#fff;box-shadow:0 5px 14px #004da833}.secondary{background:#ffffff20;color:#fff;border:1px solid #b9eaff}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0 22px}.stat{background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px;box-shadow:0 5px 16px #075a9110}.stat span{display:block;color:#617b94;font-size:12px}.stat strong{font-size:25px;display:block;margin-top:5px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:24px 0 12px}.sectionhead h3{margin:0;font-size:18px}.filters{display:flex;gap:8px;flex-wrap:wrap}.field{background:#fff;color:#102d53;border:1px solid #c6deef;border-radius:11px;padding:10px;min-width:0}.field::placeholder{color:#7893a9}.field::placeholder{color:#92abb4}.mapbox{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 8px 24px #075a9110}.maptop{padding:12px 15px;color:#58738d;font-size:12px;display:flex;justify-content:space-between;gap:10px}#map{height:270px;background:#123847}.mapnote{padding:10px 14px;font-size:12px;color:#617b94}.dives{display:grid;gap:10px}.dive{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid #d6e7f7;border-radius:17px;padding:14px;box-shadow:0 5px 15px #075a9110}.diveicon{width:64px;height:64px;flex:0 0 64px;border-radius:14px;background:#e1f4ff;display:grid;place-items:center;font-size:25px;overflow:hidden;position:relative}.diveicon img{width:100%;height:100%;object-fit:cover;display:block}.diveicon.hasphoto:after{content:"";position:absolute;inset:0;border:1px solid #ffffff55;border-radius:14px;pointer-events:none}.diveinfo{flex:1;min-width:0}.diveinfo strong{display:block;font-size:15px;overflow-wrap:anywhere}.diveinfo span{display:block;color:#55718c;font-size:12px;margin-top:4px}.depth{font-weight:750;text-align:right;white-space:nowrap}.depth small{display:block;color:var(--muted);font-size:11px;font-weight:400}.iconbtn{border:1px solid #cfe4f6;background:#f2f9ff;color:#0877c9;border-radius:10px;padding:8px}.empty{text-align:center;padding:30px 15px;color:#617b94;background:#fff;border:1px dashed #a8cce5;border-radius:16px}.footer{font-size:11px;line-height:1.5;color:#8faab4;margin-top:22px}.tabs{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid #c9e2f4;display:flex;justify-content:center;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));z-index:500}.tab{border:0;background:transparent;color:#55718c;border-radius:12px;padding:8px 20px;font-size:12px;min-width:66px}.tab.active{background:#e0f3ff;color:#0877e8}.tab b{display:block;font-size:18px;margin-bottom:2px}.modal{position:fixed;inset:0;background:#0009;z-index:1000;display:none;align-items:flex-end;justify-content:center;padding:12px}.modal.open{display:flex}.detailmodal{align-items:center}.detailsheet{width:min(100%,700px);max-height:90vh;overflow:auto;background:#fff;border:1px solid #b9d9ef;border-radius:24px;padding:20px;color:#102d53}.profilechart{background:#f4faff;border:1px solid #d6e7f7;border-radius:14px;padding:12px;margin-top:12px;overflow:hidden}.profilechart strong{display:block;font-size:14px;margin-bottom:4px}.detailgallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.detailgallery img,.detailgallery video{width:100%;max-height:240px;object-fit:cover;border-radius:12px;background:#eaf5fb}.detailactions{display:flex;gap:10px;margin-top:16px}.detailactions button{flex:1}.detailclose{float:right;border:0;background:#eaf5fb;border-radius:10px;padding:8px 12px;color:#0877c9;font-weight:700}.detailmeta{color:var(--muted);font-size:13px;margin-bottom:12px}.detailnotes{white-space:pre-wrap;line-height:1.5;margin-top:12px}.dive{cursor:pointer}.sheet{width:min(100%,600px);max-height:92vh;overflow:auto;background:#fff;border:1px solid #b9d9ef;border-radius:24px;padding:20px;color:#102d53}.sheet h3{margin:0 0 16px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.formfield{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted)}.formfield input,.formfield textarea{width:100%;background:#f4faff;color:#102d53;border:1px solid #c6deef;border-radius:10px;padding:11px}.formfield.full{grid-column:1/-1}.formbuttons{display:flex;gap:10px;margin-top:16px}.formbuttons button{flex:1}.notice{font-size:12px;color:#617b94;line-height:1.5}.hide{display:none!important}
 @media(min-width:720px){.wrap{padding-top:28px}.hero{padding:34px}.maincols{display:grid;grid-template-columns:1fr 1fr;gap:18px}.sectionhead{margin-top:25px}.dive{padding:16px}}
 @media(max-width:440px){.wrap{padding:14px 12px 90px}.hero{padding:20px}.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:22px}.pill{display:none}.formgrid{grid-template-columns:1fr 1fr}.tab{padding:8px 14px}.dive{gap:9px;padding:11px}.depth{font-size:13px}}
+
+/* DIVE PELAGO — interfaccia ispirata al mockup mobile */
+body{background:linear-gradient(180deg,#c8eaff 0%,#eaf6ff 48%,#d9edff 100%);color:#102650}
+.wrap{max-width:1100px;padding-top:0}
+.top{margin:0 -18px 0;padding:28px 22px 22px;min-height:245px;align-items:flex-start;background:linear-gradient(180deg,#003e71a8,#0067a8a8),url("https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=1400&q=85") center 42%/cover;color:#fff}
+.brand{gap:14px;align-items:center}
+.logo{width:88px;height:78px;border-radius:0;background:transparent;box-shadow:none;color:#fff;font-size:64px;filter:drop-shadow(0 3px 6px #002b50)}
+.brand h1{font-size:clamp(26px,5vw,38px);letter-spacing:.4px;color:#fff;line-height:1}
+.brand p{font-size:11px;letter-spacing:2.5px;color:#eafaff;margin-top:12px}
+.pill{background:#ffffff20;border-color:#ffffff55;color:#fff}
+.hero{display:none}
+.stats{display:none}
+.maincols{display:flex;flex-direction:column;gap:0}
+.maincols>section:first-child{order:0}
+.maincols>section:nth-child(2){order:1}
+.sectionhead{margin:18px 0 10px}
+.sectionhead h3{font-size:18px;color:#102650}
+.mapbox{border:2px solid #fff;border-radius:22px;box-shadow:0 5px 18px #075a9115}
+.maptop{display:none}
+#map{height:300px}
+.mapnote{background:#fff;font-size:11px}
+.filters{background:#fff;border:1px solid #d4e5f6;border-radius:17px;padding:10px 12px;margin-bottom:12px;box-shadow:0 4px 14px #075a9110}
+#search{flex:1;min-width:110px;border:0;background:transparent}
+#dateFilter{width:auto;max-width:48%;border:0;background:transparent;color:#102650}
+.dives{gap:10px}
+.dive{border:1px solid #e5edf7;border-radius:21px;padding:9px;background:#fff;box-shadow:0 4px 13px #0a4c7c10;gap:14px;min-height:150px}
+.diveicon{width:34%;height:132px;flex:0 0 34%;max-width:170px;border-radius:15px;background:linear-gradient(135deg,#08bad8,#005f9f);font-size:34px}
+.diveicon img{object-fit:cover}
+.diveinfo strong{font-size:clamp(15px,2.4vw,21px);color:#102650;line-height:1.2}
+.diveinfo span{font-size:clamp(12px,2vw,16px);color:#18365f;line-height:1.5}
+.depth{font-size:14px;color:#075eb0}
+.depth small{font-size:12px;color:#18365f}
+.iconbtn{padding:6px 8px;align-self:center}
+#mediaSection{margin-top:24px}
+.tabs{justify-content:space-around;gap:0;padding:8px 4px calc(8px + env(safe-area-inset-bottom));background:#fffffffa;border-top:1px solid #c8e0f4}
+.tab{flex:1;min-width:0;padding:8px 3px;color:#81879a;border-radius:0;font-size:11px}
+.tab b{font-size:23px;margin-bottom:4px}
+.tab.active{background:transparent;color:#0865bf;font-weight:800;position:relative}
+.tab.active:after{content:"";position:absolute;bottom:0;left:20%;right:20%;height:3px;border-radius:4px;background:#0877c9}
+.empty{color:#58718c}
+@media(min-width:720px){
+ .wrap{padding-top:0}
+ .top{margin-left:-18px;margin-right:-18px;padding-left:30px;min-height:220px}
+ .maincols{display:flex}
+ #map{height:300px}
+ .diveicon{height:132px}
+}
+@media(max-width:600px){
+ .wrap{padding:0 12px 100px}
+ .top{margin:0 -12px;padding:30px 18px 24px;min-height:265px}
+ .brand{align-items:center;gap:10px}
+ .logo{width:72px;height:70px;font-size:55px;flex:0 0 72px}
+ .brand h1{font-size:28px}
+ .brand p{font-size:9px;letter-spacing:2px}
+ .maincols{display:flex}
+ #map{height:270px}
+ .sectionhead{margin-top:18px}
+ .sectionhead h3{font-size:17px}
+ .filters{min-height:54px;align-items:center}
+ .dive{min-height:0;padding:8px;gap:10px}
+ .diveicon{width:35%;height:118px;flex:0 0 35%;max-width:none}
+ .diveinfo strong{font-size:16px}
+ .diveinfo span{font-size:13px}
+ .depth{display:none}
+ .dive .iconbtn{display:none}
+ .tab{font-size:11px}
+}
+
 </style>
 </head>
 <body>
@@ -24,7 +92,7 @@
 <section id="mediaSection"><div class="sectionhead"><h3>📸 Foto e video</h3><span class="notice">Ricordi delle tue immersioni</span></div><div class="empty">Le foto e i video non vengono mostrati tutti insieme.<br><br>Apri la scheda di una singola immersione per vedere le foto e i video associati.</div></section>
  <div class="footer">I dati inseriti in questa versione di prova vengono salvati nel browser del dispositivo. Non sono un backup: usa “Esporta backup” per conservarne una copia. Non caricare dati personali nel repository GitHub pubblico. L’importazione FIT legge i dati disponibili nel file. Verifica sempre i valori importati, perché i campi presenti dipendono dal dispositivo e dal file esportato.</div>
 </div>
-<nav class="tabs"><button class="tab active" data-tab="home"><b>⌂</b>Home</button><button class="tab" data-tab="dives"><b>♧</b>Immersioni</button><button class="tab" data-tab="media"><b>▧</b>Media</button><button class="tab" data-tab="backup"><b>▥</b>Statistiche</button></nav>
+<nav class="tabs"><button class="tab active" data-tab="dives"><b>📍</b>Immersioni</button><button class="tab" data-tab="backup"><b>▥</b>Statistiche</button><button class="tab" data-tab="media"><b>▧</b>Foto/Video</button><button class="tab" data-tab="profile"><b>♟</b>Profilo</button></nav>
 <div class="modal detailmodal" id="detailModal"><div class="detailsheet"><button class="detailclose" id="detailClose">Chiudi ✕</button><h3 id="detailTitle">Immersione</h3><div class="detailmeta" id="detailMeta"></div><div id="detailStats"></div><div id="detailCharts"></div><div class="detailnotes" id="detailNotes"></div><div class="detailgallery" id="detailGallery"></div><div class="detailactions"><button class="btn secondary" id="detailBack">Chiudi</button><button class="btn primary" id="detailEdit">Modifica immersione</button></div></div></div>
 <div class="modal" id="modal"><div class="sheet"><h3 id="modalTitle">Nuova immersione</h3><form id="diveForm"><input type="hidden" id="diveId"><div class="formgrid">
 <label class="formfield full">Nome del sito<input id="site" required placeholder="Es. Secca di Calafuria"></label>
@@ -242,7 +310,7 @@ $('fitInput').onchange=async e=>{
  if(failed.length)message+='\n\nFile non importati:\n'+failed.join('\n');
  alert(message);e.target.value='';
 };
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.tab==='dives')$('dives').scrollIntoView({behavior:'smooth',block:'start'});else if(b.dataset.tab==='map')$('map').scrollIntoView({behavior:'smooth',block:'center'});else if(b.dataset.tab==='media')$('mediaSection').scrollIntoView({behavior:'smooth',block:'start'});else if(b.dataset.tab==='backup'){const blob=new Blob([JSON.stringify(dives,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dive-pelago-backup-'+dateToday()+'.json';a.click();URL.revokeObjectURL(a.href)}else window.scrollTo({top:0,behavior:'smooth'})});
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.tab==='dives')$('dives').scrollIntoView({behavior:'smooth',block:'start'});else if(b.dataset.tab==='map')$('map').scrollIntoView({behavior:'smooth',block:'center'});else if(b.dataset.tab==='media')$('mediaSection').scrollIntoView({behavior:'smooth',block:'start'});else if(b.dataset.tab==='profile'){alert('La sezione Profilo sarà disponibile in una prossima versione.')}else if(b.dataset.tab==='backup'){const blob=new Blob([JSON.stringify(dives,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dive-pelago-backup-'+dateToday()+'.json';a.click();URL.revokeObjectURL(a.href)}else window.scrollTo({top:0,behavior:'smooth'})});
 initMap();render();
 </script>
 </body></html>
