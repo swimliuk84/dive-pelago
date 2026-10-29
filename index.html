@@ -70,12 +70,12 @@ function fitReadNumber(view,offset,size,base,little){
   switch(base&0x1f){
    case 0x00:case 0x02:case 0x0A:return view.getUint8(offset);
    case 0x01:return view.getInt8(offset);
-   case 0x83:return view.getInt16(offset,little);
-   case 0x84:return view.getUint16(offset,little);
-   case 0x85:return view.getInt32(offset,little);
-   case 0x86:case 0x8B:case 0x8C:return view.getUint32(offset,little);
-   case 0x88:return view.getFloat32(offset,little);
-   case 0x89:return view.getFloat64(offset,little);
+   case 0x03:return view.getInt16(offset,little);
+   case 0x04:return view.getUint16(offset,little);
+   case 0x05:return view.getInt32(offset,little);
+   case 0x06:case 0x0B:case 0x0C:return view.getUint32(offset,little);
+   case 0x08:return view.getFloat32(offset,little);
+   case 0x09:return view.getFloat64(offset,little);
    case 0x07:{let s='';for(let i=0;i<size;i++){const b=view.getUint8(offset+i);if(!b)break;s+=String.fromCharCode(b)}return s}
   }
  }catch(e){}
