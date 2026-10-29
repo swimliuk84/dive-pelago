@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 1000">
+<rect width="1120" height="1000" fill="#fff"/>
+<g transform="translate(260 65)">
+<path d="M110 0H340C485 0 585 98 585 245S480 485 335 485H175L35 590 88 470V0Z" fill="none" stroke="#062b4c" stroke-width="24" stroke-linejoin="round"/>
+<path d="M110 345Q185 355 250 320T470 312Q385 390 260 394H110Z" fill="#24b8c3"/>
+<path d="M110 390Q205 420 300 375T470 360Q385 420 260 430H110Z" fill="#087da8"/>
+<path d="M110 425Q195 450 290 410T450 400Q375 450 255 460H110Z" fill="#0b5c86"/>
+<path d="M190 260l50-31 39 8 31-35 32 10 9 37-35 37-58 13-47-22z" fill="#062b4c"/>
+<circle cx="335" cy="150" r="7" fill="#20aebc"/><circle cx="347" cy="178" r="6" fill="#20aebc"/><circle cx="358" cy="202" r="8" fill="#20aebc"/>
+<path d="M405 318v-42l17-17 17 17v42zM397 324h50v12h-50z" fill="#062b4c"/>
+<path d="M196 178q-9-8-18 0m48-19q-8-8-17 0m210 13q-9-8-18 0" fill="none" stroke="#20aebc" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="560" y="825" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="110" font-weight="400" letter-spacing="13" fill="#062b4c">DIVE<tspan fill="#159eae">PELAGO</tspan></text>
+<text x="560" y="900" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="36" letter-spacing="7" fill="#062b4c">CONNECT <tspan fill="#159eae">• DIVE •</tspan> EXPLORE</text>
+</svg>
