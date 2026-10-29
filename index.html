@@ -150,12 +150,14 @@ body{background:linear-gradient(180deg,#c8eaff 0%,#eaf6ff 48%,#d9edff 100%);colo
 .dive-photo-marker img{width:100%;height:100%;object-fit:cover;transform:rotate(45deg) scale(1.42);display:block}
 .dive-pin-marker span{display:block;width:25px;height:25px;border:3px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#f04444;box-shadow:0 2px 8px #002d4d55}
 
+
+.logo-mark{background:#fff;overflow:hidden;padding:0;border-radius:10px}.logo-mark img{display:block;width:100%;height:100%;object-fit:contain}
 </style>
 </head>
 <body>
 <button id="addFloat" aria-label="Aggiungi immersione">+</button>
 <div class="wrap">
-<header class="top"><div class="brand"><div class="logo-mark" aria-label="Logo DIVE PELAGO"><svg viewBox="0 0 120 120" role="img" aria-label="DIVE PELAGO"><path d="M20 12H61C91 12 108 31 108 58S88 98 60 98H36L13 115 24 92V12Z" fill="none" stroke="#062b4c" stroke-width="8" stroke-linejoin="round"/><path d="M25 74Q42 78 57 67T101 66Q81 84 55 85H25Z" fill="#25b9c5"/><path d="M25 83Q45 90 65 80T101 76Q79 94 54 94H25Z" fill="#0877a5"/><path d="M44 49l8-5 8 2 5-7 7 2 2 8-7 8-12 3-10-5z" fill="#082c4e"/><circle cx="69" cy="31" r="2.5" fill="#25b9c5"/><circle cx="72" cy="38" r="2" fill="#25b9c5"/><path d="M84 62v-9l4-4 4 4v9zM82 63h12v3H82z" fill="#082c4e"/></svg></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
+<header class="top"><div class="brand"><div class="logo-mark"><img src="./assets/logo-dive-pelago.svg" alt="Logo DIVE PELAGO"></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
 <section class="hero"><div class="eyebrow">EXPLORE · LOG · SHARE</div><h2 style="font-size:clamp(32px,7vw,48px);letter-spacing:1px">DIVE<br>PELAGO</h2><p>Esplora il mare. Registra le tue immersioni. Conserva ogni ricordo.</p><div class="actions"><button class="btn primary" id="addTop">＋ Aggiungi immersione</button><button class="btn secondary" id="importBtn">⇧ Importa immersioni</button><input id="fitInput" type="file" accept=".fit,.FIT,.json,.csv,.uddf,.xml" multiple class="hide"></div></section>
 <section class="stats"><div class="stat"><span>Immersioni registrate</span><strong id="total">0</strong></div><div class="stat"><span>Profondità max</span><strong id="maxDepth">—</strong></div></section>
 <div class="maincols">
