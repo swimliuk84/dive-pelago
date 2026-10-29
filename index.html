@@ -132,30 +132,39 @@ function parseFitBinary(buffer,fileName){
 function parseFitFile(file){
  return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=()=>reject(new Error('Non riesco a leggere il file selezionato.'));reader.onload=()=>{try{resolve(parseFitBinary(reader.result,file.name))}catch(err){reject(err)}};reader.readAsArrayBuffer(file)});
 }
+function parseCSVImport(text){
+ const lines=text.replace(/^\uFEFF/,'').split(/\r?\n/).filter(x=>x.trim());if(!lines.length)return [];
+ const delim=(lines[0].match(/;/g)||[]).length>(lines[0].match(/,/g)||[]).length?';':',';
+ const lineParse=line=>{let a=[],v='',q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c==='"'&&line[i+1]==='"'&&q){v+='"';i++}else if(c==='"')q=!q;else if(c===delim&&!q){a.push(v.trim());v=''}else v+=c}a.push(v.trim());return a};
+ const heads=lineParse(lines.shift()).map(x=>x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''));
+ const val=(row,names)=>{let i=heads.findIndex(h=>names.includes(h));return i<0?'':row[i]||''};
+ return lines.map(line=>{let row=lineParse(line);return {id:crypto.randomUUID?crypto.randomUUID():'imp-'+Date.now()+Math.random(),site:val(row,['site','sito','name','location','divesite','dive site'])||'Immersione importata',date:dateOnly(val(row,['date','data','datetime','starttime'])||dateToday()),depth:val(row,['depth','maxdepth','maximum depth','profondita']),duration:val(row,['duration','durata','minutes','divetime','elapsedtime']),temperature:val(row,['temperature','temperatura','watertemperature']),lat:val(row,['lat','latitude','latitudine']),lon:val(row,['lon','lng','longitude','longitudine']),notes:val(row,['notes','note','comments']),photos:[]}});
+}
+function parseXMLImport(text,fileName){
+ const doc=new DOMParser().parseFromString(text,'application/xml');if(doc.querySelector('parsererror'))throw new Error('XML non valido.');
+ const nodes=[...doc.getElementsByTagName('*')].filter(n=>['dive','divecomputer','profiledata'].includes(n.localName.toLowerCase()));
+ const candidates=nodes.length?nodes:[doc.documentElement];
+ const get=(n,names)=>{for(const e of [n,...n.getElementsByTagName('*')])if(names.includes(e.localName.toLowerCase())&&e.textContent.trim())return e.textContent.trim();return ''};
+ const num=x=>{if(!x)return '';const m=String(x).replace(',','.').match(/-?\d+(?:\.\d+)?/);return m?Number(m[0]):''};
+ const result=candidates.map((n,i)=>{const depth=get(n,['maxdepth','maximumdepth','depthmax','greatestdepth']);const duration=get(n,['duration','divetime','elapsedtime','totaltime']);const date=get(n,['datetime','starttime','date']);const site=get(n,['site','sitename','location','divelocation']);const temp=get(n,['watertemperature','temperature']);return {id:'xml-'+Date.now()+i,site:site||'Immersione importata · '+fileName,date:dateOnly(date||dateToday()),depth:num(depth),duration:num(duration),temperature:num(temp),lat:'',lon:'',notes:'Importato da XML/UDDF: controllare unità e campi.',photos:[]}});
+ const useful=result.filter(x=>x.depth!==''||x.duration!==''||x.temperature!=='');if(!useful.length)throw new Error('Non trovo campi immersione riconoscibili in questo XML/UDDF.');return useful;
+}
 $('fitInput').onchange=async e=>{
- const files=[...e.target.files];if(!files.length)return;
- let imported=0,failed=[];
- for(const f of files){
-  try{
-   let added=[];
-   if(/\.fit$/i.test(f.name)){
-    added=await parseFitFile(f);
-    if(!added.length)throw new Error('Il file non contiene dati di immersione riconoscibili.');
-   }else if(/\.json$/i.test(f.name)){
-    const data=JSON.parse(await f.text()),arr=Array.isArray(data)?data:[data];
-    added=arr.map(x=>({id:crypto.randomUUID?crypto.randomUUID():('import-'+Date.now()+Math.random()),site:x.site||x.name||x.location||'Immersione importata',date:dateOnly(x.date||x.startTime||dateToday()),depth:x.depth??x.maxDepth??'',duration:x.duration??x.totalElapsedTime??'',temperature:x.temperature??'',lat:x.lat??x.latitude??'',lon:x.lon??x.longitude??'',notes:x.notes||'Importato da JSON',photos:[]}));
-   }else if(/\.csv$/i.test(f.name)){
-    const rows=(await f.text()).split(/\r?\n/).filter(Boolean);if(!rows.length)continue;
-    const heads=rows.shift().split(',').map(s=>s.trim().toLowerCase());
-    const val=(row,names)=>{const cols=row.split(',');const i=heads.findIndex(h=>names.includes(h));return i>=0?cols[i]?.trim().replace(/^"|"$/g,'')||'':''};
-    added=rows.map(row=>({id:crypto.randomUUID?crypto.randomUUID():('import-'+Date.now()+Math.random()),site:val(row,['site','sito','name','location'])||'Immersione importata',date:dateOnly(val(row,['date','data'])||dateToday()),depth:val(row,['depth','profondita','profondità']),duration:val(row,['duration','durata','minutes']),temperature:val(row,['temperature','temperatura']),lat:val(row,['lat','latitude','latitudine']),lon:val(row,['lon','lng','longitude','longitudine']),notes:val(row,['notes','note']),photos:[]}));
-   }else{throw new Error('Formato non supportato. Seleziona un file .FIT, .JSON o .CSV.')}
-   dives.push(...added);imported+=added.length;
-  }catch(err){failed.push(f.name+': '+(err.message||'errore di lettura'))}
- }
- try{save()}catch(err){alert('Spazio del browser esaurito. Non è stato possibile salvare tutti i dati. Esporta un backup e riprova.');e.target.value='';return}
+ const files=[...e.target.files];if(!files.length)return;let imported=0,failed=[],warnings=[];
+ for(const f of files){try{let added=[];
+  if(/\.fit$/i.test(f.name)){added=await parseFitFile(f);if(!added.length)throw new Error('Il file non contiene immersioni riconoscibili.')}
+  else if(/\.json$/i.test(f.name)){const data=JSON.parse(await f.text()),arr=Array.isArray(data)?data:[data];added=arr.map(x=>({id:crypto.randomUUID?crypto.randomUUID():'imp-'+Date.now()+Math.random(),site:x.site||x.name||x.location||'Immersione importata',date:dateOnly(x.date||x.startTime||x.datetime||dateToday()),depth:x.depth??x.maxDepth??x.maximumDepth??'',duration:x.duration??x.totalElapsedTime??x.diveTime??'',temperature:x.temperature??x.waterTemperature??'',lat:x.lat??x.latitude??'',lon:x.lon??x.longitude??'',notes:x.notes||'Importato da JSON · '+f.name,photos:[]}))}
+  else if(/\.csv$/i.test(f.name)){added=parseCSVImport(await f.text());if(!added.length)throw new Error('CSV vuoto o senza righe valide.')}
+  else if(/\.(uddf|xml)$/i.test(f.name)){added=parseXMLImport(await f.text(),f.name)}
+  else throw new Error('Formato non supportato. Usa FIT, CSV, JSON o UDDF/XML.');
+  added=added.map(d=>{const n=v=>v===''||v==null?null:Number(String(v).replace(',','.'));const dep=n(d.depth),dur=n(d.duration),tmp=n(d.temperature),lat=n(d.lat),lon=n(d.lon);if(dep!==null&&(!Number.isFinite(dep)||dep<0||dep>500))warnings.push((d.site||f.name)+': profondità fuori intervallo');if(dur!==null&&(!Number.isFinite(dur)||dur<0||dur>1440))warnings.push((d.site||f.name)+': durata fuori intervallo');return {...d,depth:dep!==null&&Number.isFinite(dep)&&dep>=0&&dep<=500?Math.round(dep*10)/10:'',duration:dur!==null&&Number.isFinite(dur)&&dur>=0&&dur<=1440?Math.round(dur):'',temperature:tmp!==null&&Number.isFinite(tmp)&&tmp>=-5&&tmp<=60?Math.round(tmp*10)/10:'',lat:lat!==null&&Number.isFinite(lat)&&Math.abs(lat)<=90?lat:'',lon:lon!==null&&Number.isFinite(lon)&&Math.abs(lon)<=180?lon:''}});
+  added.forEach(d=>{if(d.depth===''||d.duration==='')warnings.push((d.site||f.name)+': '+(d.depth===''?'profondità non disponibile':'')+(d.depth===''&&d.duration===''?' e ':'')+(d.duration===''?'durata non disponibile':''))});
+  dives.push(...added);imported+=added.length;
+ }catch(err){failed.push(f.name+': '+(err.message||'errore di lettura'))}}
+ try{save()}catch(err){alert('Spazio browser esaurito. Esporta un backup e riprova.');e.target.value='';return}
  let message=imported+' immersion'+(imported===1?'e importata':'i importate')+'.';
- if(imported)message+='\nControlla data, profondità e durata nell’elenco: i campi non presenti nel FIT possono restare vuoti.';
+ if(imported)message+='\nControlla i valori: i campi assenti restano vuoti.';
+ if(warnings.length)message+='\n\nDa verificare:\n'+warnings.slice(0,10).join('\n')+(warnings.length>10?'\n…':'');
  if(failed.length)message+='\n\nFile non importati:\n'+failed.join('\n');
  alert(message);e.target.value='';
 };
