@@ -80,11 +80,66 @@ body{background:linear-gradient(180deg,#c8eaff 0%,#eaf6ff 48%,#d9edff 100%);colo
  .tab{font-size:11px}
 }
 
+
+/* Revisione fedele al riferimento grafico DIVE PELAGO */
+.top{position:relative;min-height:260px;margin:0 -18px 14px;padding:28px 26px 24px;display:flex;align-items:flex-start;justify-content:space-between;overflow:hidden;background:linear-gradient(180deg,rgba(0,91,145,.08) 0%,rgba(0,48,91,.32) 55%,rgba(0,42,76,.65) 100%),url("https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=1400&q=85") center 43%/cover;color:#fff}
+.top:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,47,83,.30),transparent 90%);pointer-events:none}
+.brand,.settings-btn{position:relative;z-index:1}
+.brand{gap:13px;align-items:center}
+.logo-mark{width:108px;height:105px;flex:0 0 108px;background:#ffffffed;border-radius:12px;display:grid;place-items:center;padding:5px;box-shadow:0 4px 20px #002d4b55}
+.logo-mark svg{width:100%;height:100%}
+.brandwords h1{font-size:clamp(27px,5vw,38px);letter-spacing:1px;line-height:1.02;color:white;margin:0;font-weight:850}
+.brandwords h1 span{display:block}
+.brandwords p{font-size:10px;letter-spacing:2.5px;color:#fff;margin:12px 0 0;font-weight:700;white-space:nowrap}
+.settings-btn{border:0;border-radius:50%;background:#ffffff20;color:#fff;font-size:30px;width:44px;height:44px}
+.maincols{display:flex;flex-direction:column;gap:0}
+.maincols>section:first-child{order:0}
+.maincols>section:nth-child(2){order:1}
+.maincols>section:first-child .sectionhead{display:none}
+.mapbox{border:2px solid #fff;border-radius:23px;overflow:hidden;box-shadow:0 5px 20px #074c7b18}
+.maptop{display:none}
+#map{height:300px}
+.mapnote{background:#fff;font-size:11px}
+.filters{display:flex;align-items:center;background:#fff;border:1px solid #d8e7f5;border-radius:18px;padding:9px 12px;margin:18px 0 12px;box-shadow:0 4px 14px #075a9110}
+#search{flex:1;min-width:80px;border:0;background:transparent}
+#dateFilter{max-width:52%;border:0;background:transparent;color:#102650}
+.sectionhead{margin:18px 0 10px}
+.sectionhead h3{font-size:18px;color:#102650}
+.dive{border:1px solid #e5edf7;border-radius:21px;padding:9px;background:#fff;box-shadow:0 4px 13px #0a4c7c10;gap:13px;min-height:145px}
+.diveicon{width:35%;height:130px;flex:0 0 35%;max-width:180px;border-radius:15px;background:linear-gradient(135deg,#08bad8,#005f9f);font-size:34px}
+.diveinfo strong{font-size:clamp(16px,2.4vw,21px);color:#102650;line-height:1.2}
+.diveinfo span{font-size:clamp(13px,2vw,16px);color:#18365f;line-height:1.4}
+.depth{font-size:14px;color:#075eb0}
+.depth small{font-size:12px;color:#18365f}
+.tabs{justify-content:space-around;gap:0;padding:8px 4px calc(8px + env(safe-area-inset-bottom));background:#fffffffa;border-top:1px solid #c8e0f4}
+.tab{flex:1;min-width:0;padding:8px 3px;color:#81879a;border-radius:0;font-size:11px}
+.tab b{font-size:23px;margin-bottom:4px}
+.tab.active{background:transparent;color:#0865bf;font-weight:800;position:relative}
+.tab.active:after{content:"";position:absolute;bottom:0;left:20%;right:20%;height:3px;border-radius:4px;background:#0877c9}
+#addFloat{position:fixed;right:20px;bottom:100px;width:68px;height:68px;border-radius:50%;border:0;background:#0865c8;color:#fff;font-size:43px;line-height:1;box-shadow:0 5px 15px #064e9a44;z-index:490}
+@media(max-width:600px){
+ .wrap{padding:0 12px 100px}
+ .top{margin:0 -12px 14px;padding:28px 16px 24px;min-height:270px;align-items:flex-start}
+ .logo-mark{width:84px;height:88px;flex-basis:84px}
+ .brand{gap:10px}
+ .brandwords h1{font-size:27px}
+ .brandwords p{font-size:8px;letter-spacing:1.6px}
+ .settings-btn{width:38px;height:38px;font-size:25px}
+ #map{height:270px}
+ .dive{min-height:0;padding:8px;gap:10px}
+ .diveicon{width:35%;height:118px;flex:0 0 35%;max-width:none}
+ .diveinfo strong{font-size:16px}
+ .diveinfo span{font-size:13px}
+ .depth{display:none}
+ .dive .iconbtn{display:none}
+}
+
 </style>
 </head>
 <body>
+<button id="addFloat" aria-label="Aggiungi immersione">+</button>
 <div class="wrap">
-<header class="top"><div class="brand"><div class="logo">🐬</div><div><h1>DIVE PELAGO</h1><p>MY DIVE LOG · Il tuo mare, le tue immersioni</p></div></div><span class="pill">● VERSIONE TEST</span></header>
+<header class="top"><div class="brand"><div class="logo-mark" aria-label="Logo DIVE PELAGO"><svg viewBox="0 0 120 120" role="img" aria-label="DIVE PELAGO"><path d="M20 12H61C91 12 108 31 108 58S88 98 60 98H36L13 115 24 92V12Z" fill="none" stroke="#062b4c" stroke-width="8" stroke-linejoin="round"/><path d="M25 74Q42 78 57 67T101 66Q81 84 55 85H25Z" fill="#25b9c5"/><path d="M25 83Q45 90 65 80T101 76Q79 94 54 94H25Z" fill="#0877a5"/><path d="M44 49l8-5 8 2 5-7 7 2 2 8-7 8-12 3-10-5z" fill="#082c4e"/><circle cx="69" cy="31" r="2.5" fill="#25b9c5"/><circle cx="72" cy="38" r="2" fill="#25b9c5"/><path d="M84 62v-9l4-4 4 4v9zM82 63h12v3H82z" fill="#082c4e"/></svg></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
 <section class="hero"><div class="eyebrow">EXPLORE · LOG · SHARE</div><h2 style="font-size:clamp(32px,7vw,48px);letter-spacing:1px">DIVE<br>PELAGO</h2><p>Esplora il mare. Registra le tue immersioni. Conserva ogni ricordo.</p><div class="actions"><button class="btn primary" id="addTop">＋ Aggiungi immersione</button><button class="btn secondary" id="importBtn">⇧ Importa immersioni</button><input id="fitInput" type="file" accept=".fit,.FIT,.json,.csv,.uddf,.xml" multiple class="hide"></div></section>
 <section class="stats"><div class="stat"><span>Immersioni registrate</span><strong id="total">0</strong></div><div class="stat"><span>Profondità max</span><strong id="maxDepth">—</strong></div></section>
 <div class="maincols"><section><div class="sectionhead"><h3>📍 Mappa delle immersioni</h3></div><div class="mapbox"><div class="maptop"><span>I tuoi siti d'immersione</span><span>● <span id="siteCount">0</span> siti</span></div><div id="map"></div><div class="mapnote">I punti rossi indicano i siti con coordinate salvate.</div></div></section>
