@@ -166,10 +166,16 @@ body{background:linear-gradient(180deg,#c8eaff 0%,#eaf6ff 48%,#d9edff 100%);colo
 .filter-result{font-size:12px;color:#58718c;margin-top:10px}
 @media(max-width:380px){.filters{grid-template-columns:1fr}.search-control{grid-column:auto}.clear-filters{width:100%}}
 
+
+/* Ripristino evidente dell'importazione e mappa più compatta */
+#addFloat{width:auto!important;height:54px!important;min-width:54px;padding:0 16px!important;border-radius:17px!important;font-size:25px!important;display:flex;align-items:center;justify-content:center;gap:8px}
+#mapSection #map{height:210px!important}
+@media(max-width:600px){#mapSection #map{height:185px!important}}
+
 </style>
 </head>
 <body>
-<button id="addFloat" aria-label="Aggiungi immersione">+</button>
+<button id="addFloat" aria-label="Importa file immersioni" title="Importa file FIT/CSV/JSON" onclick="document.getElementById('fitInput').click()">⇧</button>
 <div class="wrap">
 <header class="top"><div class="brand"><div class="logo-mark"><img src="./assets/dive-pelago-logo.svg" alt="Logo DIVE PELAGO"></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
 <section class="hero"><div class="eyebrow">EXPLORE · LOG · SHARE</div><h2 style="font-size:clamp(32px,7vw,48px);letter-spacing:1px">DIVE<br>PELAGO</h2><p>Esplora il mare. Registra le tue immersioni. Conserva ogni ricordo.</p><div class="actions"><button class="btn primary" id="addTop">＋ Aggiungi immersione</button><button class="btn secondary" id="importBtn">⇧ Importa immersioni</button><input id="fitInput" type="file" accept=".fit,.FIT,.json,.csv,.uddf,.xml" multiple class="hide"></div></section>
