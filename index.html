@@ -358,7 +358,7 @@ body[data-screen="home"] #homeScreen{
 
  <section id="mediaScreen"><h2>Foto e video</h2><p class="screen-subtitle">I ricordi associati alle tue immersioni.</p><div id="mediaGallery"></div></section>
 <section id="statsScreen"><h2>Le tue statistiche</h2><p class="screen-subtitle">Una panoramica del tuo diario subacqueo.</p><div class="stats-grid">
-<div class="stats-card"><span>Immersioni registrate</span><strong id="statsTotal">0</strong></div><div class="stats-card"><span>Profondità massima</span><strong id="statsMaxDepth">—</strong></div><div class="stats-card"><span>Tempo sott’acqua</span><strong id="statsDuration">0 min</strong></div><div class="stats-card"><span>Siti visitati</span><strong id="statsSites">0</strong></div></div>
+<div class="stats-card"><span>Immersioni registrate</span><strong id="statsTotal">0</strong></div><div class="stats-card"><span>Profondità massima</span><strong id="statsMaxDepth">—</strong></div><div class="stats-card"><span>Siti visitati</span><strong id="statsSites">0</strong></div></div>
 <div class="stats-note">I dati sono salvati nel browser di questo dispositivo. Per conservarli, esporta regolarmente un backup.</div><button class="btn primary" id="exportBackup" style="margin-top:14px;width:100%">⇩ Esporta backup</button></section>
 <div class="footer">I dati inseriti in questa versione di prova vengono salvati nel browser del dispositivo. Non sono un backup: usa “Esporta backup” per conservarne una copia. Non caricare dati personali nel repository GitHub pubblico. L’importazione FIT legge i dati disponibili nel file. Verifica sempre i valori importati, perché i campi presenti dipendono dal dispositivo e dal file esportato.</div>
 </div>
@@ -592,7 +592,6 @@ function updateStatsScreen(){
  const max=dives.length?Math.max(0,...dives.map(d=>Number(d.depth)||0)):0;
  $('statsTotal').textContent=dives.length;
  $('statsMaxDepth').textContent=max>0?max+' m':'—';
- $('statsDuration').textContent=dives.reduce((sum,d)=>sum+(Number(d.duration)||0),0)+' min';
  $('statsSites').textContent=new Set(dives.map(d=>String(d.site||'').trim()).filter(Boolean)).size;
 }
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>setScreen(b.dataset.tab));
