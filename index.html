@@ -283,6 +283,48 @@ body[data-screen="dives"] .dive{border:1px solid #a8e3f7!important}
  body[data-screen="dives"] #divesScreen{background-attachment:scroll!important}
 }
 
+
+/* Sfondo subacqueo applicato ai contenitori reali della schermata Immersioni */
+body[data-screen="dives"]{
+ background:#073b65 url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1800&q=90") center center/cover fixed!important;
+}
+body[data-screen="dives"] .wrap{
+ background:linear-gradient(180deg,rgba(0,76,125,.20),rgba(0,38,78,.36))!important;
+}
+body[data-screen="dives"] .hero,
+body[data-screen="dives"] .stats,
+body[data-screen="dives"] #mapSection,
+body[data-screen="dives"] .maincols,
+body[data-screen="dives"] #mediaScreen,
+body[data-screen="dives"] #statsScreen{
+ background:transparent!important;
+}
+body[data-screen="dives"] #mapSection,
+body[data-screen="dives"] .maincols>section{
+ padding:14px!important;border-radius:20px!important;
+ background:rgba(5,65,103,.34)!important;
+ border:1px solid rgba(148,231,255,.42)!important;
+ box-shadow:0 8px 28px rgba(0,25,60,.20)!important;
+}
+body[data-screen="dives"] .sectionhead h3,
+body[data-screen="dives"] .sectionhead .notice{color:#fff!important;text-shadow:0 1px 5px #002b50}
+body[data-screen="dives"] .filter-panel{
+ background:rgba(232,249,255,.91)!important;
+ border:1px solid #8ce5ff!important;
+ backdrop-filter:blur(7px)!important;
+}
+body[data-screen="dives"] .mapbox{
+ background:rgba(238,250,255,.94)!important;border:1px solid #9ceaff!important;
+}
+body[data-screen="dives"] .dive{
+ background:rgba(248,253,255,.94)!important;backdrop-filter:blur(5px)!important;
+}
+body[data-screen="dives"] .mapnote{color:#315b7b}
+@media(max-width:600px){
+ body[data-screen="dives"]{background-attachment:scroll!important}
+ body[data-screen="dives"] #mapSection,body[data-screen="dives"] .maincols>section{padding:10px!important}
+}
+
 </style>
 </head>
 <body>
