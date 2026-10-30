@@ -212,6 +212,16 @@ body[data-screen="media"] #mediaScreen,body[data-screen="stats"] #statsScreen{di
 .stats-card span{display:block;font-size:12px;color:#58718c}
 .stats-card strong{display:block;font-size:28px;color:#075eb0;margin-top:8px}
 .stats-note{margin-top:14px;background:#fff;border:1px solid #d4e8f8;border-radius:16px;padding:14px;font-size:13px;line-height:1.6;color:#42617f}
+.stats-lists{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+.stats-list-card{border-radius:18px;background:#fff;border:1px solid #d4e8f8;padding:16px;box-shadow:0 6px 18px #075a9110}
+.stats-list-card h3{font-size:16px;color:#102650;margin:0 0 12px}
+.stats-list-card ol,.stats-list-card ul{margin:0;padding-left:24px;color:#284866}
+.stats-list-card li{padding:7px 0;border-bottom:1px solid #eaf1f8}
+.stats-list-card li:last-child{border-bottom:0}
+.stats-list-card li span{float:right;font-size:12px;color:#58718c;margin-left:10px}
+.stats-list-card .stats-empty{list-style:none;margin-left:-24px;font-size:13px;color:#58718c}
+.favorite-field{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:#fff8df;border:1px solid #f0df9a;color:#765b00;font-weight:700}
+.favorite-field input{width:20px;height:20px;accent-color:#e2ad19}
 @media(max-width:420px){#homeScreen{padding:24px 15px 22px;min-height:calc(100svh - 70px)}.home-brand{width:min(76vw,280px);max-height:125px}.home-title{font-size:27px}.home-actions{gap:9px}.home-action{min-height:92px;padding:12px;border-radius:17px}.home-action b{font-size:25px}#mediaGallery{gap:8px}#mediaGallery .dive img,#mediaGallery .dive video{height:125px}}
 @media(min-width:720px){#homeScreen{min-height:calc(100vh - 76px);padding:30px}.home-actions{gap:16px}.home-action{min-height:112px;padding:20px}.home-action strong{font-size:16px}}
 
@@ -358,7 +368,8 @@ body[data-screen="home"] #homeScreen{
 
  <section id="mediaScreen"><h2>Foto e video</h2><p class="screen-subtitle">I ricordi associati alle tue immersioni.</p><div id="mediaGallery"></div></section>
 <section id="statsScreen"><h2>Le tue statistiche</h2><p class="screen-subtitle">Una panoramica del tuo diario subacqueo.</p><div class="stats-grid">
-<div class="stats-card"><span>Immersioni registrate</span><strong id="statsTotal">0</strong></div><div class="stats-card"><span>Profondità massima</span><strong id="statsMaxDepth">—</strong></div><div class="stats-card"><span>Siti visitati</span><strong id="statsSites">0</strong></div></div>
+<div class="stats-card"><span>Immersioni registrate</span><strong id="statsTotal">0</strong></div><div class="stats-card"><span>Siti visitati</span><strong id="statsSites">0</strong></div></div>
+<div class="stats-lists"><section class="stats-list-card"><h3>📍 Siti più visitati</h3><ol id="statsTopSites"><li class="stats-empty">Registra qualche immersione per vedere i tuoi siti più visitati.</li></ol></section><section class="stats-list-card"><h3>⭐ Siti preferiti</h3><ul id="statsFavoriteSites"><li class="stats-empty">Puoi aggiungere un sito ai preferiti quando registri un’immersione.</li></ul></section></div>
 <div class="stats-note">I dati sono salvati nel browser di questo dispositivo. Per conservarli, esporta regolarmente un backup.</div><button class="btn primary" id="exportBackup" style="margin-top:14px;width:100%">⇩ Esporta backup</button></section>
 <div class="footer">I dati inseriti in questa versione di prova vengono salvati nel browser del dispositivo. Non sono un backup: usa “Esporta backup” per conservarne una copia. Non caricare dati personali nel repository GitHub pubblico. L’importazione FIT legge i dati disponibili nel file. Verifica sempre i valori importati, perché i campi presenti dipendono dal dispositivo e dal file esportato.</div>
 </div>
@@ -366,6 +377,7 @@ body[data-screen="home"] #homeScreen{
 <div class="modal detailmodal" id="detailModal"><div class="detailsheet"><button class="detailclose" id="detailClose">Chiudi ✕</button><h3 id="detailTitle">Immersione</h3><div class="detailmeta" id="detailMeta"></div><div id="detailStats"></div><div id="detailCharts"></div><div class="detailnotes" id="detailNotes"></div><div class="detailgallery" id="detailGallery"></div><div class="detailactions"><button class="btn secondary" id="detailBack">Chiudi</button><button class="btn primary" id="detailEdit">Modifica immersione</button></div></div></div>
 <div class="modal" id="modal"><div class="sheet"><h3 id="modalTitle">Nuova immersione</h3><form id="diveForm"><input type="hidden" id="diveId"><div class="formgrid">
 <label class="formfield full">Nome del sito<input id="site" required placeholder="Es. Secca di Calafuria"></label>
+<label class="formfield full favorite-field"><input id="favoriteSite" type="checkbox"><span>⭐ Segna questo sito come preferito</span></label>
 <label class="formfield">Data<input id="date" type="date" required></label><label class="formfield">Profondità max (m)<input id="depth" type="number" min="0" max="500" step=".1" placeholder="es. 28"></label>
 <label class="formfield">Durata (min)<input id="duration" type="number" min="0" max="1000" placeholder="es. 45"></label><label class="formfield">Temperatura (°C)<input id="temperature" type="number" step=".1" placeholder="es. 18"></label>
 <label class="formfield">Latitudine<input id="lat" type="number" step=".000001" placeholder="43.50"></label><label class="formfield">Longitudine<input id="lon" type="number" step=".000001" placeholder="10.32"></label>
@@ -455,11 +467,11 @@ window.openDiveDetail=async function(id){
 $('detailClose').onclick=closeDiveDetail;
 $('detailBack').onclick=closeDiveDetail;
 $('detailModal').addEventListener('click',e=>{if(e.target===$('detailModal'))closeDiveDetail()});
-function openModal(d){$('diveForm').reset();$('diveId').value=d?.id||'';$('modalTitle').textContent=d?'Modifica immersione':'Nuova immersione';$('site').value=d?.site||'';$('date').value=d?.date||dateToday();$('depth').value=d?.depth??'';$('duration').value=d?.duration??'';$('temperature').value=d?.temperature??'';$('lat').value=d?.lat??'';$('lon').value=d?.lon??'';$('notes').value=d?.notes||'';$('modal').classList.add('open')}
+function openModal(d){$('diveForm').reset();$('diveId').value=d?.id||'';$('modalTitle').textContent=d?'Modifica immersione':'Nuova immersione';$('site').value=d?.site||'';$('favoriteSite').checked=!!d?.favoriteSite;$('date').value=d?.date||dateToday();$('depth').value=d?.depth??'';$('duration').value=d?.duration??'';$('temperature').value=d?.temperature??'';$('lat').value=d?.lat??'';$('lon').value=d?.lon??'';$('notes').value=d?.notes||'';$('modal').classList.add('open')}
 window.editDive=id=>{const d=dives.find(x=>x.id===id);if(d)openModal(d)};
 window.deleteDive=id=>{if(confirm('Vuoi eliminare questa immersione?')){dives=dives.filter(x=>x.id!==id);save()}};
 $('addTop').onclick=()=>openModal();$('cancel').onclick=()=>$('modal').classList.remove('open');$('modal').addEventListener('click',e=>{if(e.target===$('modal'))$('modal').classList.remove('open')});function refreshSiteFilter(){const sel=$('siteFilter'),current=sel.value,sites=[...new Set(dives.map(d=>String(d.site||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it'));sel.innerHTML='<option value="">Tutti i siti</option>'+sites.map(s=>'<option value="'+esc(s)+'">'+esc(s)+'</option>').join('');if(sites.includes(current))sel.value=current} $('search').oninput=render;$('siteFilter').onchange=render;$('dateFrom').onchange=render;$('dateTo').onchange=render;$('clearFilters').onclick=()=>{$('search').value='';$('siteFilter').value='';$('dateFrom').value='';$('dateTo').value='';render()};
-$('diveForm').onsubmit=async e=>{e.preventDefault();const id=$('diveId').value||(crypto.randomUUID?crypto.randomUUID():'dive-'+Date.now());const old=dives.find(x=>x.id===id);const d={id,site:$('site').value.trim(),date:$('date').value,depth:$('depth').value,duration:$('duration').value,temperature:$('temperature').value,lat:$('lat').value,lon:$('lon').value,notes:$('notes').value,photos:[...(old?.photos||[])]};const files=[...$('photos').files];if(files.length){$('diveForm').querySelector('button[type="submit"]').disabled=true;try{for(const f of files){const limit=f.type.startsWith('video/')?100*1024*1024:20*1024*1024;if(f.size>limit)throw new Error('Il file '+f.name+' supera il limite di '+(limit/1024/1024)+' MB.');const key=(crypto.randomUUID?crypto.randomUUID():'media-'+Date.now()+'-'+Math.random());await storeMedia(key,f);d.photos.push({name:f.name,type:f.type,mediaKey:key})}}catch(err){alert('Non sono riuscita a salvare tutti i file: '+(err.message||'spazio insufficiente')+'. Prova con un video più corto o controlla lo spazio disponibile.');$('diveForm').querySelector('button[type="submit"]').disabled=false;return}finally{$('diveForm').querySelector('button[type="submit"]').disabled=false}}const previous=dives;dives=old?dives.map(x=>x.id===id?d:x):[...dives,d];try{save();$('modal').classList.remove('open');$('photos').value=''}catch(err){dives=previous;alert('Non riesco a salvare i dati dell’immersione nel browser. Esporta un backup e riprova.')}};
+$('diveForm').onsubmit=async e=>{e.preventDefault();const id=$('diveId').value||(crypto.randomUUID?crypto.randomUUID():'dive-'+Date.now());const old=dives.find(x=>x.id===id);const d={id,site:$('site').value.trim(),favoriteSite:$('favoriteSite').checked,date:$('date').value,depth:$('depth').value,duration:$('duration').value,temperature:$('temperature').value,lat:$('lat').value,lon:$('lon').value,notes:$('notes').value,photos:[...(old?.photos||[])]};const files=[...$('photos').files];if(files.length){$('diveForm').querySelector('button[type="submit"]').disabled=true;try{for(const f of files){const limit=f.type.startsWith('video/')?100*1024*1024:20*1024*1024;if(f.size>limit)throw new Error('Il file '+f.name+' supera il limite di '+(limit/1024/1024)+' MB.');const key=(crypto.randomUUID?crypto.randomUUID():'media-'+Date.now()+'-'+Math.random());await storeMedia(key,f);d.photos.push({name:f.name,type:f.type,mediaKey:key})}}catch(err){alert('Non sono riuscita a salvare tutti i file: '+(err.message||'spazio insufficiente')+'. Prova con un video più corto o controlla lo spazio disponibile.');$('diveForm').querySelector('button[type="submit"]').disabled=false;return}finally{$('diveForm').querySelector('button[type="submit"]').disabled=false}}const previous=dives;dives=old?dives.map(x=>x.id===id?d:x):[...dives,d];try{save();$('modal').classList.remove('open');$('photos').value=''}catch(err){dives=previous;alert('Non riesco a salvare i dati dell’immersione nel browser. Esporta un backup e riprova.')}};
 $('importBtn').onclick=()=>$('fitInput').click();
 
 function asDate(value){
@@ -589,10 +601,21 @@ function setScreen(screen){
  if(screen==='stats')updateStatsScreen();
 }
 function updateStatsScreen(){
- const max=dives.length?Math.max(0,...dives.map(d=>Number(d.depth)||0)):0;
+ const sites=new Map();
+ dives.forEach(d=>{
+  const name=String(d.site||'').trim();
+  if(!name)return;
+  const key=name.toLocaleLowerCase('it');
+  if(!sites.has(key))sites.set(key,{name,count:0,favorite:false});
+  const entry=sites.get(key);entry.count++;entry.favorite=entry.favorite||!!d.favoriteSite;
+ });
+ const list=[...sites.values()];
+ const top=list.slice().sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'it')).slice(0,5);
+ const favorites=list.filter(s=>s.favorite).sort((a,b)=>a.name.localeCompare(b.name,'it'));
  $('statsTotal').textContent=dives.length;
- $('statsMaxDepth').textContent=max>0?max+' m':'—';
- $('statsSites').textContent=new Set(dives.map(d=>String(d.site||'').trim()).filter(Boolean)).size;
+ $('statsSites').textContent=list.length;
+ $('statsTopSites').innerHTML=top.length?top.map(s=>'<li>'+esc(s.name)+'<span>'+s.count+(s.count===1?' immersione':' immersioni')+'</span></li>').join(''):'<li class="stats-empty">Registra qualche immersione per vedere i tuoi siti più visitati.</li>';
+ $('statsFavoriteSites').innerHTML=favorites.length?favorites.map(s=>'<li>⭐ '+esc(s.name)+'<span>'+s.count+(s.count===1?' immersione':' immersioni')+'</span></li>').join(''):'<li class="stats-empty">Puoi aggiungere un sito ai preferiti quando registri un’immersione.</li>';
 }
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>setScreen(b.dataset.tab));
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>setScreen(b.dataset.go));
