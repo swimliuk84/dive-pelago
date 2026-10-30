@@ -254,6 +254,35 @@ body{background:linear-gradient(180deg,#d9f4ff 0%,#eff8ff 44%,#d8edff 100%);colo
  .diveicon{height:112px!important;width:35%!important;flex:0 0 35%!important;border-radius:14px!important}
 }
 
+
+/* Fondale marino visibile ma discreto, con tartaruga nel banner */
+.top{
+ position:relative!important;isolation:isolate;overflow:hidden;
+ background:linear-gradient(90deg,rgba(0,43,91,.48),rgba(0,99,157,.16)),url("https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1600&q=90") center 48%/cover!important;
+}
+.top:after{
+ content:"";position:absolute;z-index:-1;right:4%;top:8%;width:clamp(100px,20vw,210px);height:clamp(100px,20vw,210px);
+ background:url("https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=600&q=85") center/cover no-repeat;
+ border-radius:50%;opacity:.72;mix-blend-mode:screen;pointer-events:none;
+}
+body:has(#divesScreen) {background:#dff5ff}
+#divesScreen,body[data-screen="dives"] main{
+ background:linear-gradient(rgba(4,49,91,.20),rgba(4,49,91,.30)),url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1600&q=85") center/cover fixed!important;
+}
+body[data-screen="dives"] .maincols,
+body[data-screen="dives"] .filter-panel,
+body[data-screen="dives"] .dive,
+body[data-screen="dives"] .sectionhead{
+ background:rgba(245,252,255,.90)!important;backdrop-filter:blur(5px);
+}
+body[data-screen="dives"] .maincols{border-radius:22px;padding:12px}
+body[data-screen="dives"] .filter-panel{box-shadow:0 8px 24px #00375d35!important}
+body[data-screen="dives"] .dive{border:1px solid #a8e3f7!important}
+@media(max-width:600px){
+ .top:after{right:5%;top:5%;width:112px;height:112px;opacity:.64}
+ body[data-screen="dives"] #divesScreen{background-attachment:scroll!important}
+}
+
 </style>
 </head>
 <body>
