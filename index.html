@@ -217,6 +217,43 @@ body[data-screen="media"] #mediaScreen,body[data-screen="stats"] #statsScreen{di
 
 body[data-screen="home"] #mapSection,body[data-screen="home"] .maincols,body[data-screen="home"] .footer,body[data-screen="home"] #mediaScreen,body[data-screen="home"] #statsScreen,body[data-screen="home"] .hero,body[data-screen="home"] .stats{display:none}
 
+
+/* Revisione layout: colori più brillanti e aderenza al mockup mobile */
+:root{--navy:#062b57;--navy2:#0759a8;--sea:#0878e8;--aqua:#26d8f2;--sand:#f2f9ff;--muted:#55708f;--card:#fff;--line:#cfe5fb;--red:#ff454f}
+body{background:linear-gradient(180deg,#d9f4ff 0%,#eff8ff 44%,#d8edff 100%);color:#092b59}
+.top{min-height:220px!important;background:linear-gradient(180deg,#007dc0a8 0%,#005aa8b8 100%),url("https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=1400&q=90") center 42%/cover!important;border-bottom:3px solid #62eaff;box-shadow:0 8px 24px #0078c833}
+.logo-mark{width:112px!important;height:112px!important;flex:0 0 112px!important;background:#fff;border-radius:20px;padding:5px;box-shadow:0 6px 22px #002e5b55;overflow:hidden}
+.logo-mark img{width:100%;height:100%;object-fit:contain}
+.brand h1{color:#fff!important;text-shadow:0 2px 10px #003c73;letter-spacing:.3px!important}
+.brand h1 span{color:#8cf4ff}
+.brand p{color:#fff!important;font-weight:700;text-shadow:0 1px 5px #003c73}
+.settings-btn{background:#ffffff28!important;color:#fff!important;border:1px solid #ffffff88!important}
+#homeScreen{background:linear-gradient(145deg,#007dc0,#053c80)!important}
+.home-title{color:#fff!important}
+.home-title span{color:#8cf4ff!important}
+.home-action{border:1px solid #a7e8ff!important;box-shadow:0 8px 22px #003b7a30!important}
+.primary,.btn.primary{background:linear-gradient(135deg,#08bde9,#0864df)!important;box-shadow:0 7px 18px #0067d544!important}
+.mapbox{border:2px solid #fff!important;box-shadow:0 8px 22px #0067a822!important}
+#map{height:205px!important}
+.filters,.filter-panel{background:#fff!important;border:1px solid #bfe4fb!important;box-shadow:0 5px 16px #0069b318!important;border-radius:17px!important}
+.field{border-color:#b9def7!important;background:#f8fcff!important}
+.dive{border:1px solid #d6e9fa!important;box-shadow:0 6px 18px #075a9115!important;border-radius:20px!important}
+.diveicon{background:linear-gradient(135deg,#00c5e8,#0872d9)!important}
+.diveinfo strong{color:#092b59!important}
+.depth{color:#006fd0!important}
+.tab.active{color:#006cdb!important}
+.tab.active:after{background:linear-gradient(90deg,#00bfe8,#0864df)!important}
+@media(max-width:600px){
+ .top{min-height:220px!important;padding:24px 16px 22px!important}
+ .logo-mark{width:86px!important;height:86px!important;flex:0 0 86px!important;border-radius:16px!important}
+ .brand{gap:12px!important}
+ .brand h1{font-size:27px!important}
+ .brand p{font-size:9px!important;letter-spacing:1.6px!important}
+ #map{height:185px!important}
+ .dive{min-height:0!important;padding:8px!important;gap:11px!important}
+ .diveicon{height:112px!important;width:35%!important;flex:0 0 35%!important;border-radius:14px!important}
+}
+
 </style>
 </head>
 <body>
@@ -482,6 +519,6 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>setScreen(b.dataset.t
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>setScreen(b.dataset.go));
 $('homeImport').onclick=()=>$('fitInput').click();
 $('exportBackup').onclick=()=>{const blob=new Blob([JSON.stringify(dives,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dive-pelago-backup-'+dateToday()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
-initMap();refreshSiteFilter();render();setScreen("home");
+initMap();refreshSiteFilter();render();setScreen("dives");
 </script>
 </body></html>
