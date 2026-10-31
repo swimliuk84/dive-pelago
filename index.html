@@ -465,15 +465,23 @@ body[data-screen="home"] #homeScreen{
  body[data-screen="dives"] #mapSection .mapnote{font-size:10px;max-width:66%}
 }
 
+
+/* Logo originale fornito dall'utente: trasparenza ripristinata e proporzioni conservate */
+body[data-screen="dives"] .logo-mark{width:230px!important;height:158px!important;flex:0 0 230px!important;padding:4px!important;background:#fff!important;border-radius:12px!important}
+body[data-screen="dives"] .logo-mark img{width:100%;height:100%;object-fit:contain}
+.home-brand{width:min(72vw,300px)!important;height:auto!important;max-height:none!important;padding:5px;background:rgba(255,255,255,.97);border-radius:12px;box-shadow:0 8px 24px #001c35aa;filter:none}
+@media(max-width:1023px){body[data-screen="dives"] .logo-mark{width:min(58vw,210px)!important;height:auto!important;aspect-ratio:1.46;flex:0 0 auto!important}}
+@media(max-width:420px){.home-brand{width:min(68vw,260px)!important}}
+
 </style>
 </head>
 <body>
 <button id="addFloat" aria-label="Importa file immersioni" title="Importa file FIT/CSV/JSON" onclick="document.getElementById('fitInput').click()">⇧</button>
 <button id="addDiveFloat" aria-label="Aggiungi immersione" title="Aggiungi immersione">＋</button>
 <div class="wrap">
-<header class="top"><div class="brand"><div class="logo-mark"><img src="./assets/dive-pelago-logo.svg" alt="Logo DIVE PELAGO"></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
+<header class="top"><div class="brand"><div class="logo-mark"><img src="./assets/logo.png" alt="Logo DIVE PELAGO"></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
 <section id="homeScreen" aria-label="Home DIVE PELAGO">
-<img class="home-brand" src="./assets/dive-pelago-logo.svg" alt="DIVE PELAGO">
+<img class="home-brand" src="./assets/logo.png" alt="DIVE PELAGO">
 <h2 class="home-title">IL MARE, IMMERSIONE DOPO IMMERSIONE<span>CONNECT · DIVE · EXPLORE</span></h2>
 <div class="home-actions">
 <button class="home-action" data-go="dives"><b>🤿</b><strong>Le mie immersioni</strong><small>Esplora il tuo diario</small></button>
