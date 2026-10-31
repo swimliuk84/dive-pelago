@@ -540,6 +540,24 @@ body[data-screen="dives"] .logo-mark img{width:100%;height:100%;object-fit:conta
 .dive-year-heading small{font-size:11px;font-weight:700;color:#58738d;white-space:nowrap}
 .dive-year-heading:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,#a7d7e6,transparent)}
 
+
+/* Il logo della scheda Media mantiene la cornice rettangolare delle altre schede */
+body[data-screen="media"] .logo-mark{
+ width:230px!important;height:158px!important;flex:0 0 230px!important;
+ padding:4px!important;background:#fff!important;border-radius:12px!important;
+ box-shadow:0 8px 26px #001c3470!important;overflow:hidden!important;aspect-ratio:auto!important;
+}
+body[data-screen="media"] .logo-mark img{
+ display:block;width:100%!important;height:100%!important;max-height:none!important;
+ border-radius:0!important;object-fit:contain;
+}
+@media(max-width:1023px){
+ body[data-screen="media"] .logo-mark{
+  width:min(58vw,210px)!important;height:auto!important;aspect-ratio:1.46!important;
+  flex:0 0 auto!important;
+ }
+}
+
 </style>
 </head>
 <body>
