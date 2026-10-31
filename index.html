@@ -562,6 +562,25 @@ body[data-screen="media"] .logo-mark img{
 /* Nasconde il decoro circolare dietro al logo nella scheda Media */
 body[data-screen="media"] .top:after{display:none!important}
 
+
+/* Stessa cornice rettangolare e senza decoro circolare anche in Statistiche */
+body[data-screen="stats"] .logo-mark{
+ width:230px!important;height:158px!important;flex:0 0 230px!important;
+ padding:4px!important;background:#fff!important;border-radius:12px!important;
+ box-shadow:0 8px 26px #001c3470!important;overflow:hidden!important;aspect-ratio:auto!important;
+}
+body[data-screen="stats"] .logo-mark img{
+ display:block;width:100%!important;height:100%!important;max-height:none!important;
+ border-radius:0!important;object-fit:contain;
+}
+body[data-screen="stats"] .top:after{display:none!important}
+@media(max-width:1023px){
+ body[data-screen="stats"] .logo-mark{
+  width:min(58vw,210px)!important;height:auto!important;aspect-ratio:1.46!important;
+  flex:0 0 auto!important;
+ }
+}
+
 </style>
 </head>
 <body>
