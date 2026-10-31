@@ -187,6 +187,7 @@ body{background:linear-gradient(180deg,#c8eaff 0%,#eaf6ff 48%,#d9edff 100%);colo
 
 /* Ripristino evidente dell'importazione e mappa più compatta */
 #addFloat{width:auto!important;height:54px!important;min-width:54px;padding:0 16px!important;border-radius:17px!important;font-size:25px!important;display:flex;align-items:center;justify-content:center;gap:8px}
+#addDiveFloat{position:fixed;right:20px;bottom:164px;width:54px;height:54px;border:0;border-radius:17px;background:linear-gradient(135deg,#08bde9,#0864df);color:#fff;font-size:28px;box-shadow:0 5px 15px #064e9a44;z-index:490}
 #mapSection #map{height:210px!important}
 @media(max-width:600px){#mapSection #map{height:185px!important}}
 
@@ -357,7 +358,7 @@ body[data-screen="dives"] .mapnote{color:#315b7b}
 
 /* HOME reef background: override affidabile */
 body[data-screen="home"] #homeScreen{
- background-image:linear-gradient(180deg,rgba(0,35,65,.12),rgba(0,30,55,.22) 35%,rgba(0,24,48,.78) 100%),url("https://images.pexels.com/photos/17693477/pexels-photo-17693477.jpeg?auto=compress&cs=tinysrgb&w=1920")!important;
+ background-image:linear-gradient(180deg,rgba(0,35,65,.12),rgba(0,30,55,.22) 35%,rgba(0,24,48,.78) 100%),url("./assets/reef-home.jpg")!important;
  background-position:center center!important;
  background-size:cover!important;
  background-repeat:no-repeat!important;
@@ -367,7 +368,6 @@ body[data-screen="home"] #homeScreen{
 #mapSection .mapbox{border:4px solid #f5e7bf!important;border-radius:20px!important;background:#063b60!important;box-shadow:0 12px 30px rgba(0,49,78,.25),inset 0 0 0 2px #2bbbd0!important}
 #mapSection #map{background:radial-gradient(ellipse at 35% 35%,#19c4d1 0%,#087fa9 35%,#06476f 68%,#032c4c 100%)!important}
 #mapSection #map .leaflet-tile-pane{filter:saturate(1.35) contrast(1.06)}
-#mapSection #map:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:350;background:repeating-radial-gradient(ellipse at 18% 78%,transparent 0 22px,rgba(178,239,228,.10) 23px 24px,transparent 25px 39px);mix-blend-mode:screen}
 #mapSection .mapnote{background:linear-gradient(90deg,#d6f7f2,#fff1c9)!important;color:#164e65!important;border-top:2px solid #f0d99c;font-weight:750}
 #mapSection .sectionhead h3{color:#063b60}
 #mapSection .sectionhead .notice{background:#d8f8f3;color:#006a83;border-color:#8ddedb}
@@ -379,6 +379,7 @@ body[data-screen="home"] #homeScreen{
 </head>
 <body>
 <button id="addFloat" aria-label="Importa file immersioni" title="Importa file FIT/CSV/JSON" onclick="document.getElementById('fitInput').click()">⇧</button>
+<button id="addDiveFloat" aria-label="Aggiungi immersione" title="Aggiungi immersione">＋</button>
 <div class="wrap">
 <header class="top"><div class="brand"><div class="logo-mark"><img src="./assets/dive-pelago-logo.svg" alt="Logo DIVE PELAGO"></div><div class="brandwords"><h1>DIVE <span>PELAGO</span></h1><p>CONNECT · DIVE · EXPLORE</p></div></div><button class="settings-btn" id="settingsBtn" aria-label="Impostazioni">⚙</button></header>
 <section id="homeScreen" aria-label="Home DIVE PELAGO">
@@ -392,7 +393,7 @@ body[data-screen="home"] #homeScreen{
 </div></section>
 <section class="hero"><div class="eyebrow">EXPLORE · LOG · SHARE</div><h2 style="font-size:clamp(32px,7vw,48px);letter-spacing:1px">DIVE<br>PELAGO</h2><p>Esplora il mare. Registra le tue immersioni. Conserva ogni ricordo.</p><div class="actions"><button class="btn primary" id="addTop">＋ Aggiungi immersione</button><button class="btn secondary" id="importBtn">⇧ Importa immersioni</button><input id="fitInput" type="file" accept=".fit,.FIT,.json,.csv,.uddf,.xml" multiple class="hide"></div></section>
 <section class="stats"><div class="stat"><span>Immersioni registrate</span><strong id="total">0</strong></div><div class="stat"><span>Profondità max</span><strong id="maxDepth">—</strong></div></section>
-<section id="mapSection" class="bottom-map"><div class="sectionhead"><h3>📍 Mappa delle immersioni</h3><span class="notice">I tuoi siti d'immersione</span></div><div class="mapbox"><div class="maptop"><span>I tuoi siti d'immersione</span><span>● <span id="siteCount">0</span> siti</span></div><div id="map"></div><div class="mapnote">I punti rossi indicano i siti con coordinate salvate.</div></div></section>
+<section id="mapSection" class="bottom-map"><div class="sectionhead"><h3>📍 Mappa delle immersioni</h3><span class="notice">I tuoi siti d'immersione</span></div><div class="mapbox"><div class="maptop"><span>Carta marina · segnali nautici reali</span><span>● <span id="siteCount">0</span> siti</span></div><div id="map"></div><div class="mapnote" id="mapStatus" role="status" aria-live="polite">I punti rossi indicano i siti con coordinate salvate.</div></div></section>
 <div class="maincols">
 <section><div class="sectionhead"><h3>🤿 Le tue immersioni</h3></div><div class="filter-panel" aria-label="Filtri immersioni"><div class="filter-title">🔎 Filtra le immersioni</div><div class="filters"><label class="filter-control"><span>📍 Sito di immersione</span><select class="field" id="siteFilter" aria-label="Filtra per sito"><option value="">Tutti i siti</option></select></label><label class="filter-control"><span>Dal giorno</span><input class="field" type="date" id="dateFrom" aria-label="Data iniziale"></label><label class="filter-control"><span>Al giorno</span><input class="field" type="date" id="dateTo" aria-label="Data finale"></label><label class="filter-control search-control"><span>Oppure cerca un sito</span><input class="field" type="search" id="search" placeholder="Nome del sito…" aria-label="Cerca sito"></label><button type="button" class="clear-filters" id="clearFilters">Azzera filtri</button></div><div class="filter-result" id="filterResult" aria-live="polite"></div></div><div class="dives" id="dives" style="margin-top:12px"></div></section></div>
 
@@ -409,9 +410,9 @@ body[data-screen="home"] #homeScreen{
 <div class="modal" id="modal"><div class="sheet"><h3 id="modalTitle">Nuova immersione</h3><form id="diveForm"><input type="hidden" id="diveId"><div class="formgrid">
 <label class="formfield full">Nome del sito<input id="site" required placeholder="Es. Secca di Calafuria"></label>
 <label class="formfield full favorite-field"><input id="favoriteSite" type="checkbox"><span>⭐ Segna questo sito come preferito</span></label>
-<label class="formfield">Data<input id="date" type="date" required></label><label class="formfield">Profondità max (m)<input id="depth" type="number" min="0" max="500" step=".1" placeholder="es. 28"></label>
-<label class="formfield">Durata (min)<input id="duration" type="number" min="0" max="1000" placeholder="es. 45"></label><label class="formfield">Temperatura (°C)<input id="temperature" type="number" step=".1" placeholder="es. 18"></label>
-<label class="formfield">Latitudine<input id="lat" type="number" step=".000001" placeholder="43.50"></label><label class="formfield">Longitudine<input id="lon" type="number" step=".000001" placeholder="10.32"></label>
+<label class="formfield">Data<input id="date" type="date"></label><label class="formfield">Profondità max (m)<input id="depth" type="number" min="0" max="500" step=".1" placeholder="es. 28"></label>
+<label class="formfield">Durata (min)<input id="duration" type="number" min="0" max="1440" placeholder="es. 45"></label><label class="formfield">Temperatura (°C)<input id="temperature" type="number" min="-5" max="60" step=".1" placeholder="es. 18"></label>
+<label class="formfield">Latitudine<input id="lat" type="number" min="-90" max="90" step=".000001" placeholder="43.50"></label><label class="formfield">Longitudine<input id="lon" type="number" min="-180" max="180" step=".000001" placeholder="10.32"></label>
 <label class="formfield full">Compagno / note<textarea id="notes" rows="3" placeholder="Compagno, gas, condizioni del mare…"></textarea></label>
 <label class="formfield full">Foto e video dell’immersione<input id="photos" type="file" accept="image/*,video/*" multiple><small>Puoi scegliere foto e video dalla libreria Foto o da File.</small></label>
 </div><p class="notice">Inserisci le coordinate se vuoi vedere il sito sulla mappa. Foto e video appariranno nella scheda Media. Restano salvati in questo browser e non si sincronizzano automaticamente con iCloud.</p><div class="formbuttons"><button type="button" class="btn secondary" id="cancel">Annulla</button><button type="submit" class="btn primary">Salva immersione</button></div></form></div></div>
@@ -427,7 +428,7 @@ async function storeMedia(key,blob){const db=await mediaDB();return new Promise(
 async function readMedia(key){const db=await mediaDB();return new Promise((resolve,reject)=>{const req=db.transaction('media','readonly').objectStore('media').get(key);req.onsuccess=()=>resolve(req.result?.blob||null);req.onerror=()=>reject(req.error)})}
 function dateToday(){return new Date().toISOString().slice(0,10)}
 let map=null,markers=null;
-function initMap(){if(!window.L){$('map').innerHTML='<div style="padding:25px;color:#d0e2e7">La mappa non è disponibile: controlla la connessione.</div>';return}map=L.map('map',{scrollWheelZoom:false}).setView([43.3,10.3],7);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19, crossOrigin:true}).addTo(map);markers=L.layerGroup().addTo(map);setTimeout(()=>map.invalidateSize(),200)}
+function initMap(){if(!window.L){$('map').innerHTML='<div style="padding:25px;color:#d0e2e7">La mappa non è disponibile: controlla la connessione.</div>';return}map=L.map('map',{scrollWheelZoom:false}).setView([43.3,10.3],7);let tileFailures=0;const onTileError=()=>{tileFailures++;$('mapStatus').textContent=tileFailures>1?'Errore nel caricamento della cartografia nautica. Controlla la connessione e riprova.':'Alcune tessere cartografiche non sono disponibili. Riprova tra poco.'};const onTileLoad=()=>{if(tileFailures){tileFailures=0;$('mapStatus').textContent='I punti rossi indicano i siti con coordinate salvate.'}};const tiles=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19,crossOrigin:true});tiles.on('tileerror',onTileError).on('tileload',onTileLoad).addTo(map);const seamarks=L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openseamap.org/">OpenSeaMap contributors</a>',maxZoom:19,maxNativeZoom:18,crossOrigin:true});seamarks.on('tileerror',onTileError).on('tileload',onTileLoad).addTo(map);L.control.layers(null,{'Segnali nautici':seamarks},{collapsed:true,position:'topright'}).addTo(map);markers=L.layerGroup().addTo(map);setTimeout(()=>map.invalidateSize(),200)}
 async function updateMap(list){if(!map||!markers)return;markers.clearLayers();let pts=[];const valid=list.filter(d=>Number.isFinite(+d.lat)&&Number.isFinite(+d.lon)&&d.lat!==''&&d.lon!==''&&Math.abs(+d.lat)<=90&&Math.abs(+d.lon)<=180);const uniqueSites=new Set(valid.map(d=>String(d.site||'').trim().toLocaleLowerCase('it')));$('siteCount').textContent=uniqueSites.size;for(const d of valid){const p=[+d.lat,+d.lon];pts.push(p);let photo=(d.photos||[]).find(ph=>String(ph.type||'').startsWith('image/')&&(ph.data||ph.mediaKey));let src=photo?.data||'';if(!src&&photo?.mediaKey){try{const blob=await readMedia(photo.mediaKey);if(blob)src=URL.createObjectURL(blob)}catch(e){}}const icon=src?L.divIcon({className:'dive-photo-marker',html:'<span><img src="'+src.replace(/"/g,'&quot;')+'" alt=""></span>',iconSize:[48,48],iconAnchor:[24,24],popupAnchor:[0,-22]}):L.divIcon({className:'dive-pin-marker',html:'<span></span>',iconSize:[34,40],iconAnchor:[17,38],popupAnchor:[0,-30]});L.marker(p,{icon}).addTo(markers).bindPopup('<b>'+(d.favoriteSite?'⭐ ':'')+esc(d.site)+'</b><br>'+esc(d.date||'')+' · '+esc(d.depth||'—')+' m'+(d.favoriteSite?'<br><strong style="color:#d99a00">⭐ Sito preferito</strong>':''))}if(pts.length===1)map.setView(pts[0],11);else if(pts.length>1)map.fitBounds(pts,{padding:[30,30],maxZoom:12})}
 function render(){const q=$('search').value.toLowerCase().trim(),site=$('siteFilter').value,from=$('dateFrom').value,to=$('dateTo').value;const list=dives.filter(d=>(!q||String(d.site).toLowerCase().includes(q)||String(d.notes||'').toLowerCase().includes(q))&&(!site||String(d.site||'')===site)&&(!from||(d.date||'')>=from)&&(!to||(d.date||'')<=to)).sort((a,b)=>(b.date||'').localeCompare(a.date||''));$('filterResult').textContent=list.length+' di '+dives.length+' immersioni';$('total').textContent=dives.length;$('maxDepth').textContent=dives.length&&Math.max(...dives.map(d=>Number(d.depth)||0))>0?Math.max(...dives.map(d=>Number(d.depth)||0))+' m':'—';$('dives').innerHTML=list.length?list.map(d=>'<article class="dive" role="button" tabindex="0" onclick="openDiveDetail(\''+d.id+'\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openDiveDetail(\''+d.id+'\')}"><div class="diveicon" data-dive-thumb="'+esc(d.id)+'">🤿</div><div class="diveinfo"><strong>'+((d.favoriteSite)?'⭐ ':'')+esc(d.site||'Sito senza nome')+'</strong><span>'+esc(d.date||'Data non indicata')+(d.temperature!==''&&d.temperature!=null?' · '+esc(d.temperature)+' °C':'')+'</span></div><div class="depth">'+(d.depth?esc(d.depth)+' m':'—')+'<small>'+(d.duration?esc(d.duration)+' min':'durata n.d.')+'</small></div><button class="iconbtn" aria-label="Modifica" onclick="event.stopPropagation();editDive(\''+d.id+'\')">✎</button><button class="iconbtn" aria-label="Elimina" onclick="event.stopPropagation();deleteDive(\''+d.id+'\')">×</button></article>').join(''):'<div class="empty">🌊<br><br>Non hai ancora immersioni qui.<br>Premi <b>“Aggiungi immersione”</b> per iniziare.</div>';updateMap(dives);loadDiveThumbnails(list)}
 async function loadDiveThumbnails(list){
@@ -498,10 +499,10 @@ window.openDiveDetail=async function(id){
 $('detailClose').onclick=closeDiveDetail;
 $('detailBack').onclick=closeDiveDetail;
 $('detailModal').addEventListener('click',e=>{if(e.target===$('detailModal'))closeDiveDetail()});
-function openModal(d){$('diveForm').reset();$('diveId').value=d?.id||'';$('modalTitle').textContent=d?'Modifica immersione':'Nuova immersione';$('site').value=d?.site||'';$('favoriteSite').checked=!!d?.favoriteSite;$('date').value=d?.date||dateToday();$('depth').value=d?.depth??'';$('duration').value=d?.duration??'';$('temperature').value=d?.temperature??'';$('lat').value=d?.lat??'';$('lon').value=d?.lon??'';$('notes').value=d?.notes||'';$('modal').classList.add('open')}
+function openModal(d){$('diveForm').reset();$('diveId').value=d?.id||'';$('modalTitle').textContent=d?'Modifica immersione':'Nuova immersione';$('site').value=d?.site||'';$('favoriteSite').checked=!!d?.favoriteSite;$('date').value=d?.date||'';$('depth').value=d?.depth??'';$('duration').value=d?.duration??'';$('temperature').value=d?.temperature??'';$('lat').value=d?.lat??'';$('lon').value=d?.lon??'';$('notes').value=d?.notes||'';$('modal').classList.add('open')}
 window.editDive=id=>{const d=dives.find(x=>x.id===id);if(d)openModal(d)};
 window.deleteDive=id=>{if(confirm('Vuoi eliminare questa immersione?')){dives=dives.filter(x=>x.id!==id);save()}};
-$('addTop').onclick=()=>openModal();$('cancel').onclick=()=>$('modal').classList.remove('open');$('modal').addEventListener('click',e=>{if(e.target===$('modal'))$('modal').classList.remove('open')});function refreshSiteFilter(){const sel=$('siteFilter'),current=sel.value,sites=[...new Set(dives.map(d=>String(d.site||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it'));sel.innerHTML='<option value="">Tutti i siti</option>'+sites.map(s=>'<option value="'+esc(s)+'">'+esc(s)+'</option>').join('');if(sites.includes(current))sel.value=current} $('search').oninput=render;$('siteFilter').onchange=render;$('dateFrom').onchange=render;$('dateTo').onchange=render;$('clearFilters').onclick=()=>{$('search').value='';$('siteFilter').value='';$('dateFrom').value='';$('dateTo').value='';render()};
+$('addTop').onclick=()=>openModal();$('addDiveFloat').onclick=()=>openModal();$('cancel').onclick=()=>$('modal').classList.remove('open');$('modal').addEventListener('click',e=>{if(e.target===$('modal'))$('modal').classList.remove('open')});function refreshSiteFilter(){const sel=$('siteFilter'),current=sel.value,sites=[...new Set(dives.map(d=>String(d.site||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it'));sel.innerHTML='<option value="">Tutti i siti</option>'+sites.map(s=>'<option value="'+esc(s)+'">'+esc(s)+'</option>').join('');if(sites.includes(current))sel.value=current} $('search').oninput=render;$('siteFilter').onchange=render;$('dateFrom').onchange=render;$('dateTo').onchange=render;$('clearFilters').onclick=()=>{$('search').value='';$('siteFilter').value='';$('dateFrom').value='';$('dateTo').value='';render()};
 $('diveForm').onsubmit=async e=>{e.preventDefault();const id=$('diveId').value||(crypto.randomUUID?crypto.randomUUID():'dive-'+Date.now());const old=dives.find(x=>x.id===id);const d={id,site:$('site').value.trim(),favoriteSite:$('favoriteSite').checked,date:$('date').value,depth:$('depth').value,duration:$('duration').value,temperature:$('temperature').value,lat:$('lat').value,lon:$('lon').value,notes:$('notes').value,photos:[...(old?.photos||[])]};const files=[...$('photos').files];if(files.length){$('diveForm').querySelector('button[type="submit"]').disabled=true;try{for(const f of files){const limit=f.type.startsWith('video/')?100*1024*1024:20*1024*1024;if(f.size>limit)throw new Error('Il file '+f.name+' supera il limite di '+(limit/1024/1024)+' MB.');const key=(crypto.randomUUID?crypto.randomUUID():'media-'+Date.now()+'-'+Math.random());await storeMedia(key,f);d.photos.push({name:f.name,type:f.type,mediaKey:key})}}catch(err){alert('Non sono riuscita a salvare tutti i file: '+(err.message||'spazio insufficiente')+'. Prova con un video più corto o controlla lo spazio disponibile.');$('diveForm').querySelector('button[type="submit"]').disabled=false;return}finally{$('diveForm').querySelector('button[type="submit"]').disabled=false}}const previous=dives;dives=old?dives.map(x=>x.id===id?d:x):[...dives,d];try{save();$('modal').classList.remove('open');$('photos').value=''}catch(err){dives=previous;alert('Non riesco a salvare i dati dell’immersione nel browser. Esporta un backup e riprova.')}};
 $('importBtn').onclick=()=>$('fitInput').click();
 
@@ -512,7 +513,7 @@ function asDate(value){
  return isNaN(d)?null:d;
 }
 function dateOnly(value){
- const d=asDate(value); if(!d)return dateToday();
+ const d=asDate(value); if(!d)return '';
  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 function firstNumber(objects,keys){
@@ -528,7 +529,8 @@ function fitReadNumber(view,offset,size,base,little){
    case 0x03:return view.getInt16(offset,little);
    case 0x04:return view.getUint16(offset,little);
    case 0x05:return view.getInt32(offset,little);
-   case 0x06:case 0x0B:case 0x0C:return view.getUint32(offset,little);
+   case 0x06:case 0x0B:return view.getUint32(offset,little);
+   case 0x0C:return Number(view.getBigUint64(offset,little));
    case 0x08:return view.getFloat32(offset,little);
    case 0x09:return view.getFloat64(offset,little);
    case 0x07:{let s='';for(let i=0;i<size;i++){const b=view.getUint8(offset+i);if(!b)break;s+=String.fromCharCode(b)}return s}
@@ -543,7 +545,7 @@ function parseFitBinary(buffer,fileName){
  const header=v.getUint8(0),dataSize=v.getUint32(4,true),limit=Math.min(v.byteLength,header+dataSize);
  let pos=header,defs={},records=[],sessions=[],activity=null,lastTimestamp=0;
  while(pos<limit){
-  const h=v.getUint8(pos++),compressed=!!(h&0x80),local=h&0x0f,offset=(h>>5)&3;
+  const h=v.getUint8(pos++),compressed=!!(h&0x80),local=h&0x0f,offset=(h>>5)&0x1f;
   if(!compressed&&(h&0x40)){
    if(pos+5>limit)break;
    pos++;const arch=v.getUint8(pos++),little=arch===0,global=little?v.getUint16(pos,true):v.getUint16(pos,false);pos+=2;
@@ -562,25 +564,25 @@ function parseFitBinary(buffer,fileName){
   else if(def.global===18)sessions.push(obj);
   else if(def.global===34)activity=obj;
  }
+ if(!sessions.length&&!activity)return [];
  const sources=sessions.length?sessions:[{}];
  return sources.map((s,i)=>{
   const ts=s[2]??activity?.[253],date=fitTimestamp(ts);
   const rel=records.filter(r=>ts==null||r[253]==null||Math.abs(r[253]-ts)<36*3600);
-  // La profondità massima non è presente nel messaggio session di questo FIT Garmin:
-  // il profilo immersione registra la profondità nel campo 92 dei record, in millesimi di metro.
+  // FIT Session.max_depth (field 141) and Record.depth (field 92) use a 1000 scale in metres.
   const validFitValue=n=>Number.isFinite(n)&&n>=0&&n!==65535&&n!==4294967295;
   const recordDepths=[];
   for(const r of rel){
-   if(r[3]!=null&&validFitValue(Number(r[3]))&&Number(r[3])<100000)recordDepths.push(Number(r[3])/100);
    if(r[92]!=null&&validFitValue(Number(r[92]))&&Number(r[92])<100000)recordDepths.push(Number(r[92])/1000);
   }
-  const sessionDepth=s[63]!=null&&validFitValue(Number(s[63]))?Number(s[63])/100:'';
+  const sessionDepth=s[141]!=null&&validFitValue(Number(s[141]))?Number(s[141])/1000:'';
   const maxDepth=sessionDepth!==''?sessionDepth:(recordDepths.length?Math.max(...recordDepths):'');
-  const elapsed=s[7]??s[5];
+  const elapsed=s[7];
   const duration=elapsed!=null&&validFitValue(Number(elapsed))?Math.round(Number(elapsed)/1000/60):(rel.length>1?Math.round((Math.max(...rel.map(r=>r[253]||0))-Math.min(...rel.map(r=>r[253]||0)))/60):'');
   const lat=s[3]??rel.find(r=>r[0]!=null)?.[0],lon=s[4]??rel.find(r=>r[1]!=null)?.[1];
-  const latitude=lat==null?'':(Math.abs(lat)>90?lat*180/2147483648:lat),longitude=lon==null?'':(Math.abs(lon)>180?lon*180/2147483648:lon);
-  const temps=rel.map(r=>r[13]).filter(n=>Number.isFinite(n)&&n<100);const baseTs=ts??Math.min(...rel.map(x=>x[253]||0));const profile=rel.filter(r=>r[253]!=null).map(r=>{let dep=null;if(r[92]!=null&&validFitValue(Number(r[92]))&&Number(r[92])<100000)dep=Number(r[92])/1000;else if(r[3]!=null&&validFitValue(Number(r[3]))&&Number(r[3])<100000)dep=Number(r[3])/100;return {t:Math.max(0,Number(r[253])-baseTs),depth:dep,temp:Number.isFinite(r[13])&&r[13]<100?r[13]:null}}).filter(p=>p.depth!==null||p.temp!==null);
+  const toDegrees=(n,max)=>n==null||n===2147483647||n===-2147483648?'':Math.abs(n)>max?n*180/2147483648:n;
+  const latitude=toDegrees(lat,90),longitude=toDegrees(lon,180);
+  const temps=rel.map(r=>r[13]).filter(n=>Number.isFinite(n)&&n<100);const baseTs=ts??Math.min(...rel.map(x=>x[253]||0));const profile=rel.filter(r=>r[253]!=null).map(r=>{let dep=null;if(r[92]!=null&&validFitValue(Number(r[92]))&&Number(r[92])<100000)dep=Number(r[92])/1000;return {t:Math.max(0,Number(r[253])-baseTs),depth:dep,temp:Number.isFinite(r[13])&&r[13]<100?r[13]:null}}).filter(p=>p.depth!==null||p.temp!==null);
   return {id:crypto.randomUUID?crypto.randomUUID():'fit-'+Date.now()+'-'+i,site:'Immersione Garmin · '+fileName,date:dateOnly(date),depth:maxDepth===''?'':Math.round(maxDepth*10)/10,duration,temperature:temps.length?Math.round(temps.reduce((a,b)=>a+b,0)/temps.length*10)/10:'',lat:latitude===''?'':Math.round(latitude*1e6)/1e6,lon:longitude===''?'':Math.round(longitude*1e6)/1e6,notes:'Importato dal file FIT '+fileName,photos:[],profile};
  });
 }
@@ -593,7 +595,7 @@ function parseCSVImport(text){
  const lineParse=line=>{let a=[],v='',q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c==='"'&&line[i+1]==='"'&&q){v+='"';i++}else if(c==='"')q=!q;else if(c===delim&&!q){a.push(v.trim());v=''}else v+=c}a.push(v.trim());return a};
  const heads=lineParse(lines.shift()).map(x=>x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''));
  const val=(row,names)=>{let i=heads.findIndex(h=>names.includes(h));return i<0?'':row[i]||''};
- return lines.map(line=>{let row=lineParse(line);return {id:crypto.randomUUID?crypto.randomUUID():'imp-'+Date.now()+Math.random(),site:val(row,['site','sito','name','location','divesite','dive site'])||'Immersione importata',date:dateOnly(val(row,['date','data','datetime','starttime'])||dateToday()),depth:val(row,['depth','maxdepth','maximum depth','profondita']),duration:val(row,['duration','durata','minutes','divetime','elapsedtime']),temperature:val(row,['temperature','temperatura','watertemperature']),lat:val(row,['lat','latitude','latitudine']),lon:val(row,['lon','lng','longitude','longitudine']),notes:val(row,['notes','note','comments']),photos:[]}});
+ return lines.map(line=>{let row=lineParse(line);return {id:crypto.randomUUID?crypto.randomUUID():'imp-'+Date.now()+Math.random(),site:val(row,['site','sito','name','location','divesite','dive site'])||'Immersione importata',date:dateOnly(val(row,['date','data','datetime','starttime'])),depth:val(row,['depth','maxdepth','maximum depth','profondita']),duration:val(row,['duration','durata','minutes','divetime','elapsedtime']),temperature:val(row,['temperature','temperatura','watertemperature']),lat:val(row,['lat','latitude','latitudine']),lon:val(row,['lon','lng','longitude','longitudine']),notes:val(row,['notes','note','comments']),photos:[]}});
 }
 function parseXMLImport(text,fileName){
  const doc=new DOMParser().parseFromString(text,'application/xml');if(doc.querySelector('parsererror'))throw new Error('XML non valido.');
@@ -601,24 +603,27 @@ function parseXMLImport(text,fileName){
  const candidates=nodes.length?nodes:[doc.documentElement];
  const get=(n,names)=>{for(const e of [n,...n.getElementsByTagName('*')])if(names.includes(e.localName.toLowerCase())&&e.textContent.trim())return e.textContent.trim();return ''};
  const num=x=>{if(!x)return '';const m=String(x).replace(',','.').match(/-?\d+(?:\.\d+)?/);return m?Number(m[0]):''};
- const result=candidates.map((n,i)=>{const depth=get(n,['maxdepth','maximumdepth','depthmax','greatestdepth']);const duration=get(n,['duration','divetime','elapsedtime','totaltime']);const date=get(n,['datetime','starttime','date']);const site=get(n,['site','sitename','location','divelocation']);const temp=get(n,['watertemperature','temperature']);return {id:'xml-'+Date.now()+i,site:site||'Immersione importata · '+fileName,date:dateOnly(date||dateToday()),depth:num(depth),duration:num(duration),temperature:num(temp),lat:'',lon:'',notes:'Importato da XML/UDDF: controllare unità e campi.',photos:[]}});
+ const result=candidates.map((n,i)=>{const depth=get(n,['maxdepth','maximumdepth','depthmax','greatestdepth']);const duration=get(n,['duration','divetime','elapsedtime','totaltime']);const date=get(n,['datetime','starttime','date']);const site=get(n,['site','sitename','location','divelocation']);const temp=get(n,['watertemperature','temperature']);return {id:'xml-'+Date.now()+i,site:site||'Immersione importata · '+fileName,date:dateOnly(date),depth:num(depth),duration:num(duration),temperature:num(temp),lat:'',lon:'',notes:'Importato da XML/UDDF: controllare unità e campi.',photos:[]}});
  const useful=result.filter(x=>x.depth!==''||x.duration!==''||x.temperature!=='');if(!useful.length)throw new Error('Non trovo campi immersione riconoscibili in questo XML/UDDF.');return useful;
 }
 $('fitInput').onchange=async e=>{
- const files=[...e.target.files];if(!files.length)return;let imported=0,failed=[],warnings=[];
+ const files=[...e.target.files];if(!files.length)return;let imported=0,duplicates=0,failed=[],warnings=[];
  for(const f of files){try{let added=[];
   if(/\.fit$/i.test(f.name)){added=await parseFitFile(f);if(!added.length)throw new Error('Il file non contiene immersioni riconoscibili.')}
-  else if(/\.json$/i.test(f.name)){const data=JSON.parse(await f.text()),arr=Array.isArray(data)?data:[data];added=arr.map(x=>({id:crypto.randomUUID?crypto.randomUUID():'imp-'+Date.now()+Math.random(),site:x.site||x.name||x.location||'Immersione importata',date:dateOnly(x.date||x.startTime||x.datetime||dateToday()),depth:x.depth??x.maxDepth??x.maximumDepth??'',duration:x.duration??x.totalElapsedTime??x.diveTime??'',temperature:x.temperature??x.waterTemperature??'',lat:x.lat??x.latitude??'',lon:x.lon??x.longitude??'',notes:x.notes||'Importato da JSON · '+f.name,photos:[]}))}
+  else if(/\.json$/i.test(f.name)){const data=JSON.parse(await f.text()),arr=Array.isArray(data)?data:[data];added=arr.map(x=>({id:crypto.randomUUID?crypto.randomUUID():'imp-'+Date.now()+Math.random(),site:x.site||x.name||x.location||'Immersione importata',date:dateOnly(x.date||x.startTime||x.datetime),depth:x.depth??x.maxDepth??x.maximumDepth??'',duration:x.duration??x.totalElapsedTime??x.diveTime??'',temperature:x.temperature??x.waterTemperature??'',lat:x.lat??x.latitude??'',lon:x.lon??x.longitude??'',notes:x.notes||'Importato da JSON · '+f.name,photos:[]}))}
   else if(/\.csv$/i.test(f.name)){added=parseCSVImport(await f.text());if(!added.length)throw new Error('CSV vuoto o senza righe valide.')}
   else if(/\.(uddf|xml)$/i.test(f.name)){added=parseXMLImport(await f.text(),f.name)}
   else throw new Error('Formato non supportato. Usa FIT, CSV, JSON o UDDF/XML.');
   added=added.map(d=>{const n=v=>v===''||v==null?null:Number(String(v).replace(',','.'));const dep=n(d.depth),dur=n(d.duration),tmp=n(d.temperature),lat=n(d.lat),lon=n(d.lon);if(dep!==null&&(!Number.isFinite(dep)||dep<0||dep>500))warnings.push((d.site||f.name)+': profondità fuori intervallo');if(dur!==null&&(!Number.isFinite(dur)||dur<0||dur>1440))warnings.push((d.site||f.name)+': durata fuori intervallo');return {...d,depth:dep!==null&&Number.isFinite(dep)&&dep>=0&&dep<=500?Math.round(dep*10)/10:'',duration:dur!==null&&Number.isFinite(dur)&&dur>=0&&dur<=1440?Math.round(dur):'',temperature:tmp!==null&&Number.isFinite(tmp)&&tmp>=-5&&tmp<=60?Math.round(tmp*10)/10:'',lat:lat!==null&&Number.isFinite(lat)&&Math.abs(lat)<=90?lat:'',lon:lon!==null&&Number.isFinite(lon)&&Math.abs(lon)<=180?lon:''}});
-  added.forEach(d=>{if(d.depth===''||d.duration==='')warnings.push((d.site||f.name)+': '+(d.depth===''?'profondità non disponibile':'')+(d.depth===''&&d.duration===''?' e ':'')+(d.duration===''?'durata non disponibile':''));if(d.lat===''||d.lon==='')warnings.push((d.site||f.name)+': coordinate GPS non presenti; non comparirà sulla mappa finché non le aggiungi modificando l’immersione.')});
-  dives.push(...added);imported+=added.length;
+  added.forEach(d=>{if(!d.date)warnings.push((d.site||f.name)+': data non disponibile');if(d.depth===''||d.duration==='')warnings.push((d.site||f.name)+': '+(d.depth===''?'profondità non disponibile':'')+(d.depth===''&&d.duration===''?' e ':'')+(d.duration===''?'durata non disponibile':''));if(d.lat===''||d.lon==='')warnings.push((d.site||f.name)+': coordinate GPS non presenti; non comparirà sulla mappa finché non le aggiungi modificando l’immersione.')});
+  const signature=d=>{const norm=x=>String(x??'').trim().toLocaleLowerCase('it');return [norm(d.site),norm(d.date),norm(d.depth),norm(d.duration),norm(d.temperature),norm(d.lat),norm(d.lon)].join('|')};
+  const known=new Set(dives.filter(d=>String(d.site||'').trim()&&String(d.date||'').trim()).map(signature));
+  const fresh=added.filter(d=>{if(!String(d.site||'').trim()||!String(d.date||'').trim())return true;const key=signature(d);if(known.has(key)){duplicates++;return false}known.add(key);return true});
+  dives.push(...fresh);imported+=fresh.length;
  }catch(err){failed.push(f.name+': '+(err.message||'errore di lettura'))}}
  try{save()}catch(err){alert('Spazio browser esaurito. Esporta un backup e riprova.');e.target.value='';return}
  let message=imported+' immersion'+(imported===1?'e importata':'i importate')+'.';
- if(imported)message+='\nControlla i valori: i campi assenti restano vuoti.';
+ if(imported)message+='\nControlla i valori: i campi assenti restano vuoti.';if(duplicates)message+='\n'+duplicates+' immersion'+(duplicates===1?'e duplicata ignorata.':'i duplicate ignorate.');
  if(warnings.length)message+='\n\nDa verificare:\n'+warnings.slice(0,10).join('\n')+(warnings.length>10?'\n…':'');
  if(failed.length)message+='\n\nFile non importati:\n'+failed.join('\n');
  alert(message);e.target.value='';
@@ -655,3 +660,4 @@ $('exportBackup').onclick=()=>{const blob=new Blob([JSON.stringify(dives,null,2)
 initMap();refreshSiteFilter();render();setScreen("dives");
 </script>
 </body></html>
+
