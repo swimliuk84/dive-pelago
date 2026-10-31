@@ -509,6 +509,28 @@ body[data-screen="dives"] .logo-mark img{width:100%;height:100%;object-fit:conta
  .map-compass .compass-n,.map-compass .compass-e,.map-compass .compass-s,.map-compass .compass-w{font-size:7px}
 }
 
+
+/* Fondale marino visibile nella testata Immersioni e cartografia più luminosa */
+#mapSection .leaflet-tile-pane{filter:saturate(1.28) contrast(1.04) brightness(1.22)!important}
+@media(min-width:1024px){
+ body[data-screen="dives"] .top{
+  left:0!important;top:0!important;right:370px;width:auto!important;height:180px;min-height:180px!important;
+  margin:0!important;padding:10px 20px!important;display:flex;align-items:center;justify-content:flex-start;
+  background:linear-gradient(90deg,rgba(0,39,66,.38),rgba(0,55,76,.20) 58%,rgba(0,55,76,.08)),url("./assets/reef-home.jpg") center 45%/cover no-repeat!important;
+  border:0!important;border-bottom:4px solid #f5e7bf!important;
+  box-shadow:0 8px 20px rgba(0,26,48,.34)!important;
+ }
+ body[data-screen="dives"] .top:after{display:none!important}
+}
+@media(max-width:1023px){
+ body[data-screen="dives"] .top{
+  min-height:166px!important;margin:0 -12px 12px!important;padding:10px 12px!important;
+  background:linear-gradient(100deg,rgba(0,39,66,.38),rgba(0,55,76,.16)),url("./assets/reef-home.jpg") center 45%/cover no-repeat!important;
+  border-bottom:3px solid #7be5ff!important;
+ }
+ body[data-screen="dives"] .top:after{display:none!important}
+}
+
 </style>
 </head>
 <body>
