@@ -473,6 +473,25 @@ body[data-screen="dives"] .logo-mark img{width:100%;height:100%;object-fit:conta
 @media(max-width:1023px){body[data-screen="dives"] .logo-mark{width:min(58vw,210px)!important;height:auto!important;aspect-ratio:1.46;flex:0 0 auto!important}}
 @media(max-width:420px){.home-brand{width:min(68vw,260px)!important}}
 
+
+/* Mappa più compatta: mantiene il pannello laterale e lascia spazio alla cornice */
+@media(min-width:1024px){
+ body[data-screen="dives"] #mapSection .mapbox{
+  position:absolute;left:50%;right:auto;top:50%;transform:translate(-50%,-50%);
+  width:min(90%,1080px);height:min(62vh,640px);height:min(62dvh,640px);min-height:390px;
+  flex:none;border:4px solid #f5e7bf!important;border-radius:22px!important;
+  box-shadow:0 15px 36px rgba(0,26,48,.42),inset 0 0 0 2px #2bbbd0!important;
+ }
+ body[data-screen="dives"] #mapSection #map{width:100%;height:100%!important;min-height:0;flex:1}
+ body[data-screen="dives"] #mapSection>.sectionhead{display:none!important}
+}
+@media(max-width:1023px){
+ body[data-screen="dives"] #mapSection .mapbox{height:min(52vh,460px);height:min(52dvh,460px);min-height:270px}
+}
+@media(max-width:600px){
+ body[data-screen="dives"] #mapSection .mapbox{height:min(46vh,400px);height:min(46dvh,400px);min-height:250px}
+}
+
 </style>
 </head>
 <body>
